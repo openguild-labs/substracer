@@ -1,5 +1,7 @@
 use sc_service::ChainType;
-use simulator_runtime::config::{AccountId, RuntimeGenesisConfig, Signature, SystemConfig};
+use simulator_runtime::config::{
+    AccountId, BalancesConfig, RuntimeGenesisConfig, Signature, SystemConfig,
+};
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_consensus_grandpa::AuthorityId as GrandpaId;
 use sp_core::{sr25519, Pair, Public};
@@ -36,13 +38,20 @@ fn testnet_genesis(
     initial_authorities: Vec<(AuraId, GrandpaId)>,
     root_key: AccountId,
     endowed_accounts: Vec<AccountId>,
-    _enable_println: bool,
 ) -> RuntimeGenesisConfig {
     RuntimeGenesisConfig {
         system: SystemConfig {
             // Add Wasm runtime to storage.
             code: wasm_binary.to_vec(),
             ..Default::default()
+        },
+        balances: BalancesConfig {
+            // Configure endowed accounts with initial balance of 1 << 60.
+            balances: endowed_accounts
+                .iter()
+                .cloned()
+                .map(|k| (k, 1 << 60))
+                .collect(),
         },
     }
 }
@@ -79,7 +88,6 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
                     get_account_id_from_seed::<sr25519::Public>("Eve//stash"),
                     get_account_id_from_seed::<sr25519::Public>("Ferdie//stash"),
                 ],
-                true,
             )
         },
         // Bootnodes

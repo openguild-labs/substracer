@@ -9,6 +9,8 @@ license = "MIT-0"
 publish = false
 
 [dependencies]
+num = "0.4.1"
+
 codec = { package = "parity-scale-codec", version = "3.6.1", default-features = false, features = [
  "derive",
 ] }
@@ -31,4 +33,10 @@ sp-consensus-grandpa = { version = "4.0.0-dev", git = "https://github.com/parity
 
 [features]
 default = ["std"]
-std = ["sp-runtime/std", 'sp-core/std', "frame-support/std", "frame-system/std"]
+std = [
+ "sp-runtime/std",
+ 'sp-core/std',
+ "frame-support/std",
+ "frame-system/std",
+ "pallet-balances/std",
+]
