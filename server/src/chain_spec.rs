@@ -103,3 +103,40 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
         None,
     ))
 }
+
+pub fn development_config() -> Result<ChainSpec, String> {
+    Ok(ChainSpec::from_genesis(
+        // Name
+        "Development",
+        // ID
+        "dev",
+        ChainType::Development,
+        move || {
+            testnet_genesis(
+                &[],
+                // Initial PoA authorities
+                vec![authority_keys_from_seed("Alice")],
+                // Sudo account
+                get_account_id_from_seed::<sr25519::Public>("Alice"),
+                // Pre-funded accounts
+                vec![
+                    get_account_id_from_seed::<sr25519::Public>("Alice"),
+                    get_account_id_from_seed::<sr25519::Public>("Bob"),
+                    get_account_id_from_seed::<sr25519::Public>("Alice//stash"),
+                    get_account_id_from_seed::<sr25519::Public>("Bob//stash"),
+                ],
+            )
+        },
+        // Bootnodes
+        vec![],
+        // Telemetry
+        None,
+        // Protocol ID
+        None,
+        None,
+        // Properties
+        None,
+        // Extensions
+        None,
+    ))
+}
