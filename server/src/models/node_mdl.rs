@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 
+use super::pair_mdl::SimulatedPairModel;
+
 pub struct HasAddress {
     address: String,
 }
@@ -54,13 +56,15 @@ impl TypedNodeIdentityBuilder<HasAddress> {
             address: self.address.address,
             node_name: self.name,
             dns: self.dns,
+            keystore: vec![],
         }
     }
 }
 
-#[derive(Default, Serialize, Deserialize, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[derive(Default, Serialize, Deserialize, Debug, Eq, PartialEq)]
 pub struct NodeModel {
     address: String,
     node_name: Option<String>,
     dns: Option<String>,
+    keystore: Vec<SimulatedPairModel>,
 }

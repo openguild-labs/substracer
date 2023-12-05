@@ -7,6 +7,8 @@ edition = "2021"
 
 [dependencies]
 bs58 = "0.5.0"
+tiny-bip39 = "1.0.0"
+array-bytes = "6.1"
 
 # cli dependencies
 clap = { version = "4.3.16", features = ["derive"] }
@@ -28,6 +30,7 @@ frame-support = { version = "4.0.0-dev", default-features = false, git = "https:
 frame-system = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0" }
 frame-try-runtime = { version = "0.10.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", optional = true, branch = "polkadot-v1.0.0" }
 # primitive dependencies
+sc-cli = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0" }
 sp-runtime = { version = "24.0.0", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0" }
 sp-core = { version = "21.0.0", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0" }
 sc-service = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0" }
@@ -39,6 +42,7 @@ sp-consensus-grandpa = { version = "4.0.0-dev", git = "https://github.com/parity
 
 # local dependencies
 simulator-runtime = { version = "0.0.1-dev", path = "../runtime/" }
+anyhow = "1.0.75"
 
 [features]
 default = ["std"]

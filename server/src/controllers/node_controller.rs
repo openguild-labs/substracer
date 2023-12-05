@@ -1,4 +1,7 @@
-use crate::models::node_mdl::{NodeModel, TypedNodeIdentityBuilder};
+use crate::models::{
+    node_mdl::{NodeModel, TypedNodeIdentityBuilder},
+    pair_mdl::SimulatedPairModel,
+};
 use axum::{http::StatusCode, Json};
 use serde::Deserialize;
 
@@ -22,4 +25,10 @@ pub async fn add_new_node(Json(payload): Json<AddNewNode>) -> Result<Json<NodeMo
 
     let node_result = node_builder.build();
     Ok(Json(node_result))
+}
+
+pub async fn add_node_keystore(
+    Json(payload): Json<SimulatedPairModel>,
+) -> Result<Json<SimulatedPairModel>, StatusCode> {
+    todo!()
 }

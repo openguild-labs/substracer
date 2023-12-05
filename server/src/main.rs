@@ -2,6 +2,7 @@ mod chain_spec;
 mod config;
 mod controllers;
 mod models;
+mod utils;
 
 use std::net::{Ipv4Addr, SocketAddr};
 
@@ -50,6 +51,14 @@ async fn start_web_server() {
     // build our application with a route
     let app = Router::new()
         .route("/node", post(controllers::node_controller::add_new_node))
+        .route(
+            "/node/key",
+            post(controllers::node_controller::add_node_keystore),
+        )
+        .route(
+            "/key",
+            post(controllers::key_controller::generate_new_key_pair),
+        )
         .route(
             "/chain_spec",
             get(controllers::chain_controller::list_default_chain_specs),
