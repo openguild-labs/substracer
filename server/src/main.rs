@@ -1,14 +1,25 @@
 mod chain_spec;
 mod config;
+mod controllers;
+mod models;
+
+use std::net::{Ipv4Addr, SocketAddr};
 
 use axum::{
-    http::StatusCode,
     routing::{get, post},
-    Json, Router,
+    Router,
 };
 use chain_spec::local_testnet_config;
+use clap::Parser;
 use config::ServerConfiguration;
-use serde::{Deserialize, Serialize};
+
+/// Simple key/value store with an HTTP API
+#[derive(Debug, Parser)]
+struct Config {
+    /// The port to listen on
+    #[clap(short = 'p', long, default_value = "3000")]
+    port: u16,
+}
 
 // load chain specification
 fn load_chain_spec() -> Result<Box<dyn sc_service::ChainSpec>, String> {
@@ -23,61 +34,38 @@ fn simulate_substrate_net() -> Result<(), String> {
     Ok(())
 }
 
+/// start the web server with command
+/// CMD: `cargo run --bin substrate-simulator-server -- --port 3000`
 async fn start_web_server() {
     // initialize tracing
-    tracing_subscriber::fmt::init();
+    tracing_subscriber::fmt()
+        .with_max_level(tracing::Level::TRACE)
+        .init();
+
+    // Parse command line arguments
+    let config = Config::parse();
+
+    tracing::info!("Server port configured at {}", config.port);
 
     // build our application with a route
     let app = Router::new()
-        // `GET /` goes to `root`
-        .route("/", get(root))
-        // `POST /users` goes to `create_user`
-        .route("/users", post(create_user));
+        .route("/node", post(controllers::node_controller::add_new_node))
+        .route(
+            "/chain_spec",
+            get(controllers::chain_controller::list_default_chain_specs),
+        );
 
-    // run our app with hyper, listening globally on port 3000
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
-    axum::serve(listener, app).await.unwrap();
+    let addr = SocketAddr::from((Ipv4Addr::UNSPECIFIED, config.port));
+    tracing::info!("Listening on {}", addr);
+    axum::Server::bind(&addr)
+        .serve(app.into_make_service())
+        .await
+        .expect("Failed to serve the simulator server");
 }
 
 #[tokio::main]
 async fn main() {
-    println!("Substrate simulator");
-
     simulate_substrate_net().unwrap();
 
     start_web_server().await;
-}
-
-// basic handler that responds with a static string
-async fn root() -> &'static str {
-    "Hello, World!"
-}
-
-async fn create_user(
-    // this argument tells axum to parse the request body
-    // as JSON into a `CreateUser` type
-    Json(payload): Json<CreateUser>,
-) -> (StatusCode, Json<User>) {
-    // insert your application logic here
-    let user = User {
-        id: 1337,
-        username: payload.username,
-    };
-
-    // this will be converted into a JSON response
-    // with a status code of `201 Created`
-    (StatusCode::CREATED, Json(user))
-}
-
-// the input to our `create_user` handler
-#[derive(Deserialize)]
-struct CreateUser {
-    username: String,
-}
-
-// the output to our `create_user` handler
-#[derive(Serialize)]
-struct User {
-    id: u64,
-    username: String,
 }

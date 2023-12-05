@@ -10,4 +10,8 @@ impl ServerConfiguration {
     pub fn new(chain_spec: Box<dyn ChainSpec>) -> Self {
         ServerConfiguration { chain_spec }
     }
+
+    pub fn get_chain_spec(self: Self) -> Box<dyn ChainSpec> {
+        self.chain_spec
+    }
 }
