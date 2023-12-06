@@ -1,5 +1,6 @@
 use anyhow::{Error, Result};
 use bip39::{Language, Mnemonic, MnemonicType};
+use edgedb_derive::Queryable;
 use sc_cli::{utils::format_seed, with_crypto_scheme, CryptoScheme};
 use serde::{Deserialize, Serialize};
 use sp_core::crypto::{
@@ -10,18 +11,18 @@ use sp_runtime::MultiSigner;
 use crate::utils::key_utils::{format_account_id, format_public_key};
 use sp_runtime::traits::IdentifyAccount;
 
-#[derive(Deserialize, Serialize, Debug, PartialEq, Eq)]
+#[derive(Default, Deserialize, Serialize, Debug, PartialEq, Eq, Queryable)]
 pub struct SimulatedPairModel {
-    key_password: Option<String>,
-    secret_phrase: Option<String>,
-    secret_key_uri: Option<String>,
-    public_key_uri: Option<String>,
-    secret_seed: Option<String>,
-    network_id: String,
-    public_key: String,
-    account_id: String,
-    public_key_ss58: String,
-    ss58_address: String,
+    pub key_password: Option<String>,
+    pub secret_phrase: Option<String>,
+    pub secret_key_uri: Option<String>,
+    pub public_key_uri: Option<String>,
+    pub secret_seed: Option<String>,
+    pub network_id: String,
+    pub public_key: String,
+    pub account_id: String,
+    pub public_key_ss58: String,
+    pub ss58_address: String,
 }
 
 pub(crate) mod pair_dispatcher {
@@ -132,7 +133,15 @@ pub(crate) mod pair_dispatcher {
         });
     }
 
-    pub fn generate_new_key_pair(
+    pub fn get_scheme_pair_from_public(
+        public_str: &str,
+        scheme: CryptoScheme,
+        network_overrides: Option<Ss58AddressFormat>,
+    ) -> Result<SimulatedPairModel, Error> {
+        with_crypto_scheme!(scheme, get_pair_from_public(public_str, network_overrides))
+    }
+
+    pub fn generate_new_scheme_key_pair(
         words: Option<usize>,
         scheme: CryptoScheme,
         network: Option<Ss58AddressFormat>,
@@ -145,10 +154,9 @@ pub(crate) mod pair_dispatcher {
             None => MnemonicType::Words12,
         };
         let mnemonic = Mnemonic::new(words, Language::English);
-        let pair = with_crypto_scheme!(
+        with_crypto_scheme!(
             scheme,
             generate_from_uri(mnemonic.phrase(), password, network)
-        );
-        Ok(pair?)
+        )
     }
 }

@@ -1,34 +1,82 @@
-use crate::models::{
-    node_mdl::{NodeModel, TypedNodeIdentityBuilder},
-    pair_mdl::SimulatedPairModel,
-};
-use axum::{http::StatusCode, Json};
+use crate::{models::node_mdl::NodeModel, utils::query_utils::ToEdgedbQuery};
+use axum::{extract::State, http::StatusCode, Json};
 use serde::Deserialize;
 
-#[derive(Deserialize)]
+#[derive(Default, Clone, Deserialize)]
 pub struct AddNewNode {
     address: String,
     node_name: Option<String>,
     dns: Option<String>,
 }
 
+impl ToEdgedbQuery for AddNewNode {
+    fn to_query(&self) -> &'static str {
+        return "insert Node { name := <str>$0 , dns := <str>$1 , address :=<str>$2 };";
+    }
+}
+
 // add_new_node: Add new node to the simulated network
-pub async fn add_new_node(Json(payload): Json<AddNewNode>) -> Result<Json<NodeModel>, StatusCode> {
-    let mut node_builder = TypedNodeIdentityBuilder::default().address(payload.address);
-    if payload.node_name != None {
-        node_builder = node_builder.name(payload.node_name.unwrap());
-    }
-
-    if payload.dns != None {
-        node_builder = node_builder.dns(payload.dns.unwrap());
-    }
-
-    let node_result = node_builder.build();
+pub async fn add_new_node(
+    State(edgedb_client): State<edgedb_tokio::Client>,
+    Json(payload): Json<AddNewNode>,
+) -> Result<Json<NodeModel>, StatusCode> {
+    let query = payload.to_query();
+    let node_result: NodeModel = edgedb_client
+        .query_required_single(
+            query,
+            &(
+                payload.node_name,
+                payload.dns,
+                payload.address,
+                Vec::<String>::default(),
+            ),
+        )
+        .await
+        .unwrap();
     Ok(Json(node_result))
 }
 
+#[derive(Default, Clone, Deserialize)]
+pub struct AddNodeKeyStore {
+    node_id: String,
+    pair_pubkey: String,
+}
+
+impl ToEdgedbQuery for AddNodeKeyStore {
+    fn to_query(&self) -> &'static str {
+        return "update Node filter Node.id = <str>$0 set {
+            keystore += (
+                select Pair filter .public_key = <str>$1
+            ) 
+        }";
+    }
+}
+
 pub async fn add_node_keystore(
-    Json(payload): Json<SimulatedPairModel>,
-) -> Result<Json<SimulatedPairModel>, StatusCode> {
-    todo!()
+    State(edgedb_client): State<edgedb_tokio::Client>,
+    Json(payload): Json<AddNodeKeyStore>,
+) -> Result<Json<NodeModel>, StatusCode> {
+    let query = &payload.to_query();
+    let node_result: NodeModel = edgedb_client
+        .query_required_single(query, &(payload.node_id, payload.pair_pubkey))
+        .await
+        .unwrap();
+    Ok(Json(node_result))
+}
+
+#[derive(Default)]
+pub struct GetAllNodes {}
+
+impl ToEdgedbQuery for GetAllNodes {
+    fn to_query(&self) -> &'static str {
+        return "select Node { name, dns, address, keystore }";
+    }
+}
+
+pub async fn get_all_nodes(
+    State(edgedb_client): State<edgedb_tokio::Client>,
+) -> Result<Json<Vec<NodeModel>>, StatusCode> {
+    let query = &GetAllNodes::default().to_query();
+    let node_results: Vec<NodeModel> = edgedb_client.query(query, &()).await.unwrap();
+    Ok(Json(node_results))
 }

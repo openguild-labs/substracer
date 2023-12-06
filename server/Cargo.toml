@@ -20,6 +20,10 @@ serde = "1.0.193"
 tracing-subscriber = "0.3.18"
 tracing = "0.1"
 serde_json = "1.0.108"
+# edgedb dependencies
+edgedb-derive = { git = "https://github.com/edgedb/edgedb-rust" }
+edgedb-tokio = { git = "https://github.com/edgedb/edgedb-rust" }
+edgedb-protocol = { git = "https://github.com/edgedb/edgedb-rust" }
 
 # pallets
 pallet-timestamp = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0" }
