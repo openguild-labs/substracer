@@ -43,9 +43,7 @@ fn simulate_substrate_net() -> Result<(), String> {
 /// CMD: `cargo run --bin substrate-simulator-server -- --port 3000`
 async fn start_web_server() -> Result<(), Error> {
     // initialize tracing
-    tracing_subscriber::fmt()
-        .with_max_level(tracing::Level::TRACE)
-        .init();
+    tracing_subscriber::fmt().init();
 
     // Parse command line arguments
     let config = Config::parse();

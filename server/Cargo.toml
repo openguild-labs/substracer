@@ -9,6 +9,8 @@ edition = "2021"
 bs58 = "0.5.0"
 tiny-bip39 = "1.0.0"
 array-bytes = "6.1"
+anyhow = "1.0.75"
+uuid = { version = "1.4.1", features = ["v1", "serde"] }
 
 # cli dependencies
 clap = { version = "4.3.16", features = ["derive"] }
@@ -46,7 +48,6 @@ sp-consensus-grandpa = { version = "4.0.0-dev", git = "https://github.com/parity
 
 # local dependencies
 simulator-runtime = { version = "0.0.1-dev", path = "../runtime/" }
-anyhow = "1.0.75"
 
 [features]
 default = ["std"]

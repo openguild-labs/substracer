@@ -4,8 +4,8 @@ use serde::Deserialize;
 
 #[derive(Default, Clone, Deserialize)]
 pub struct AddNewNode {
+    name: Option<String>,
     address: String,
-    node_name: Option<String>,
     dns: Option<String>,
 }
 
@@ -25,7 +25,7 @@ pub async fn add_new_node(
         .query_required_single(
             query,
             &(
-                payload.node_name,
+                payload.name,
                 payload.dns,
                 payload.address,
                 Vec::<String>::default(),
@@ -69,7 +69,7 @@ pub struct GetAllNodes {}
 
 impl ToEdgedbQuery for GetAllNodes {
     fn to_query(&self) -> &'static str {
-        return "select Node { name, dns, address, keystore }";
+        return "select Node;";
     }
 }
 
@@ -77,6 +77,11 @@ pub async fn get_all_nodes(
     State(edgedb_client): State<edgedb_tokio::Client>,
 ) -> Result<Json<Vec<NodeModel>>, StatusCode> {
     let query = &GetAllNodes::default().to_query();
-    let node_results: Vec<NodeModel> = edgedb_client.query(query, &()).await.unwrap();
-    Ok(Json(node_results))
+    match edgedb_client.query(query, &()).await {
+        Ok(node_results) => return Ok(Json(node_results)),
+        Err(err) => {
+            tracing::error!("ERROR [get_all_nodes]: {}", err);
+            return Ok(Json(vec![]));
+        }
+    }
 }

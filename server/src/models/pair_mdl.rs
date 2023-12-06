@@ -13,6 +13,7 @@ use sp_runtime::traits::IdentifyAccount;
 
 #[derive(Default, Deserialize, Serialize, Debug, PartialEq, Eq, Queryable)]
 pub struct SimulatedPairModel {
+    pub id: uuid::Uuid,
     pub key_password: Option<String>,
     pub secret_phrase: Option<String>,
     pub secret_key_uri: Option<String>,
@@ -45,6 +46,7 @@ pub(crate) mod pair_dispatcher {
             let public_key = pair.public();
             let network_override = unwrap_or_default_ss58_version(network_override);
             return Ok(SimulatedPairModel {
+                id: uuid::Uuid::default(),
                 key_password: password,
                 public_key_uri: None,
                 account_id: format_account_id::<Pair>(public_key.clone()),
@@ -64,6 +66,7 @@ pub(crate) mod pair_dispatcher {
             let public_key = pair.public();
             let network_override = unwrap_or_default_ss58_version(network_override);
             return Ok(SimulatedPairModel {
+                id: uuid::Uuid::default(),
                 key_password: password,
                 public_key_uri: None,
                 account_id: format_account_id::<Pair>(public_key.clone()),
@@ -86,6 +89,7 @@ pub(crate) mod pair_dispatcher {
         } else if let Ok((public_key, network)) = Pair::Public::from_string_with_version(uri) {
             let network_override = network_override.unwrap_or(network);
             return Ok(SimulatedPairModel {
+                id: uuid::Uuid::default(),
                 key_password: password,
                 secret_phrase: None,
                 secret_key_uri: None,
@@ -120,6 +124,7 @@ pub(crate) mod pair_dispatcher {
         let network_override = unwrap_or_default_ss58_version(network_override);
 
         return Ok(SimulatedPairModel {
+            id: uuid::Uuid::default(),
             key_password: None,
             secret_phrase: None,
             secret_key_uri: None,

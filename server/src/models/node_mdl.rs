@@ -5,8 +5,9 @@ use super::pair_mdl::SimulatedPairModel;
 
 #[derive(Default, Serialize, Deserialize, Debug, Eq, PartialEq, Queryable)]
 pub struct NodeModel {
-    pub address: String,
-    pub node_name: Option<String>,
+    pub id: uuid::Uuid,
+    pub name: Option<String>,
     pub dns: Option<String>,
+    pub address: String,
     pub keystore: Vec<SimulatedPairModel>,
 }

@@ -10,20 +10,20 @@ pub struct GenesisSourceModel {
 #[derive(Queryable)]
 #[allow(non_snake_case)]
 pub struct QueryableChainSpecModel {
-    name: String,
-    id: String,
-    chainType: String,
-    bootNodes: Vec<String>,
-    protocolId: Option<String>,
+    pub id: String,
+    pub name: String,
+    pub chainType: String,
+    pub bootNodes: Vec<String>,
+    pub protocolId: Option<String>,
 }
 
 #[derive(Deserialize, Serialize)]
 #[allow(non_snake_case)]
 pub struct ChainSpecModel {
-    name: String,
-    id: String,
-    chainType: String,
-    bootNodes: Vec<String>,
-    protocolId: Option<String>,
-    genesis: GenesisSourceModel,
+    pub id: String,
+    pub name: String,
+    pub chainType: String,
+    pub bootNodes: Vec<String>,
+    pub protocolId: Option<String>,
+    pub genesis: GenesisSourceModel,
 }
