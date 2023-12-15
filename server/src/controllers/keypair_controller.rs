@@ -55,8 +55,9 @@ pub struct SaveNewKeypair {
 }
 
 impl ToEdgedbQuery for SaveNewKeypair {
-    fn to_query(&self) -> &'static str {
-        return "insert Pair {
+    fn to_query(&self) -> String {
+        return String::from(
+            "INSERT Pair {
             key_password := <str>$0,
             secret_phrase := <str>$1,
             secret_key_uri := <str>$2,
@@ -68,7 +69,8 @@ impl ToEdgedbQuery for SaveNewKeypair {
             account_id := <str>$7,
             public_key_ss58 := <str>$8,
             ss58_address := <str>$9
-        }";
+        }",
+        );
     }
 }
 
@@ -80,7 +82,7 @@ pub async fn save_new_keypair(
     let keypair = payload.keypair;
     let pair_result: SimulatedPairModel = edgedb_client
         .query_required_single(
-            query,
+            query.as_str(),
             &(
                 keypair.key_password,
                 keypair.secret_phrase,

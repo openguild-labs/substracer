@@ -1,3 +1,3 @@
 pub trait ToEdgedbQuery {
-    fn to_query(&self) -> &'static str;
+    fn to_query(&self) -> String;
 }

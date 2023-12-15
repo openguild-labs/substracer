@@ -1,5 +1,8 @@
-use crate::{models::node_mdl::NodeModel, utils::query_utils::ToEdgedbQuery};
-use axum::{extract::State, http::StatusCode, Json};
+use crate::utils::errors::ServerApiError;
+use crate::{
+    models::node_mdl::NodeModel, types::EdgeSelectable, utils::query_utils::ToEdgedbQuery,
+};
+use axum::{extract::State, response::Result as AxumResult, Json};
 use serde::Deserialize;
 
 #[derive(Default, Clone, Deserialize)]
@@ -10,8 +13,10 @@ pub struct AddNewNode {
 }
 
 impl ToEdgedbQuery for AddNewNode {
-    fn to_query(&self) -> &'static str {
-        return "insert Node { name := <str>$0 , dns := <str>$1 , address :=<str>$2 };";
+    fn to_query(&self) -> String {
+        return String::from(
+            "INSERT Node { name := <str>$0 , dns := <str>$1 , address :=<str>$2 };",
+        );
     }
 }
 
@@ -19,11 +24,11 @@ impl ToEdgedbQuery for AddNewNode {
 pub async fn add_new_node(
     State(edgedb_client): State<edgedb_tokio::Client>,
     Json(payload): Json<AddNewNode>,
-) -> Result<Json<NodeModel>, StatusCode> {
+) -> AxumResult<Json<NodeModel>> {
     let query = payload.to_query();
-    let node_result: NodeModel = edgedb_client
-        .query_required_single(
-            query,
+    let node_result: Option<NodeModel> = edgedb_client
+        .query_single(
+            query.as_str(),
             &(
                 payload.name,
                 payload.dns,
@@ -32,8 +37,12 @@ pub async fn add_new_node(
             ),
         )
         .await
+        .map_err(ServerApiError::EdgeDBQueryError)
         .unwrap();
-    Ok(Json(node_result))
+    let data = node_result
+        .ok_or(ServerApiError::ObjectNotFound("Node".into()))
+        .unwrap();
+    Ok(Json(data))
 }
 
 #[derive(Default, Clone, Deserialize)]
@@ -43,45 +52,54 @@ pub struct AddNodeKeyStore {
 }
 
 impl ToEdgedbQuery for AddNodeKeyStore {
-    fn to_query(&self) -> &'static str {
-        return "update Node filter Node.id = <str>$0 set {
-            keystore += (
-                select Pair filter .public_key = <str>$1
-            ) 
-        }";
+    fn to_query(&self) -> String {
+        return String::from("UPDATE Node FILTER Node.id = <str>$0 SET { keystore += <str>$1}");
     }
 }
 
 pub async fn add_node_keystore(
     State(edgedb_client): State<edgedb_tokio::Client>,
     Json(payload): Json<AddNodeKeyStore>,
-) -> Result<Json<NodeModel>, StatusCode> {
+) -> AxumResult<Json<NodeModel>> {
     let query = &payload.to_query();
-    let node_result: NodeModel = edgedb_client
-        .query_required_single(query, &(payload.node_id, payload.pair_pubkey))
+    let node_result: Option<NodeModel> = edgedb_client
+        .query_single(query, &(payload.node_id, payload.pair_pubkey))
         .await
+        .map_err(ServerApiError::EdgeDBQueryError)
         .unwrap();
-    Ok(Json(node_result))
+
+    let data = node_result
+        .ok_or(ServerApiError::ObjectNotFound("Node".into()))
+        .unwrap();
+
+    Ok(Json(data))
 }
 
 #[derive(Default)]
 pub struct GetAllNodes {}
 
 impl ToEdgedbQuery for GetAllNodes {
-    fn to_query(&self) -> &'static str {
-        return "select Node;";
+    fn to_query(&self) -> String {
+        let fields = NodeModel::fields_as_shape();
+        println!("Fields: {:?}", fields);
+        return format!("SELECT Node {fields};");
     }
 }
 
 pub async fn get_all_nodes(
     State(edgedb_client): State<edgedb_tokio::Client>,
-) -> Result<Json<Vec<NodeModel>>, StatusCode> {
+) -> AxumResult<Json<Vec<NodeModel>>> {
     let query = &GetAllNodes::default().to_query();
-    match edgedb_client.query(query, &()).await {
-        Ok(node_results) => return Ok(Json(node_results)),
-        Err(err) => {
-            tracing::error!("ERROR [get_all_nodes]: {}", err);
-            return Ok(Json(vec![]));
-        }
-    }
+
+    let result = edgedb_client
+        .query(query, &())
+        .await
+        .map_err(|err| {
+            let err_result = ServerApiError::EdgeDBQueryError(err);
+            tracing::error!("ERROR [get_all_nodes]: {}", err_result);
+            err_result
+        })
+        .unwrap();
+
+    Ok(Json(result))
 }

@@ -2,7 +2,9 @@ mod chain_spec;
 mod config;
 mod controllers;
 mod models;
+mod serializer;
 mod state;
+mod types;
 mod utils;
 
 use std::net::{Ipv4Addr, SocketAddr};

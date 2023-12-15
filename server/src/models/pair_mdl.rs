@@ -1,6 +1,7 @@
 use anyhow::{Error, Result};
 use bip39::{Language, Mnemonic, MnemonicType};
 use edgedb_derive::Queryable;
+use field_names::FieldNames;
 use sc_cli::{utils::format_seed, with_crypto_scheme, CryptoScheme};
 use serde::{Deserialize, Serialize};
 use sp_core::crypto::{
@@ -8,10 +9,13 @@ use sp_core::crypto::{
 };
 use sp_runtime::MultiSigner;
 
-use crate::utils::key_utils::{format_account_id, format_public_key};
+use crate::{
+    types::EdgeSelectable,
+    utils::key_utils::{format_account_id, format_public_key},
+};
 use sp_runtime::traits::IdentifyAccount;
 
-#[derive(Default, Deserialize, Serialize, Debug, PartialEq, Eq, Queryable)]
+#[derive(Default, Deserialize, Serialize, Debug, PartialEq, Eq, Queryable, FieldNames)]
 pub struct SimulatedPairModel {
     pub id: uuid::Uuid,
     pub key_password: Option<String>,
@@ -24,6 +28,13 @@ pub struct SimulatedPairModel {
     pub account_id: String,
     pub public_key_ss58: String,
     pub ss58_address: String,
+}
+
+impl EdgeSelectable for SimulatedPairModel {
+    fn fields_as_shape() -> String {
+        let fields = Self::FIELDS.join(", ");
+        format!("{{ {fields} }}")
+    }
 }
 
 pub(crate) mod pair_dispatcher {
