@@ -1,13 +1,16 @@
-import React from 'react';
-import FileImageItemCard from './FileImageItemCard';
-import { CanvasImageBackground, CanvasLayerInfo } from '@core/models/canvas-type';
-import { FileImageItem } from '@core/models';
-import UploadImageButton from './UploadImageButton';
-import { IMAGE_BACKGROUNDS } from '@assets/image-backgrounds';
-import ImageItemCard from './ImageItemCard';
-import { Space } from 'antd';
-import { makeid } from '@utils/string.util';
-import { fetchImageBuffer } from '@utils/canvas.util';
+import React from "react";
+import FileImageItemCard from "../FileImageItemCard";
+import {
+  CanvasImageBackground,
+  CanvasLayerInfo,
+} from "@core/models/canvas-type";
+import { FileImageItem } from "@core/models";
+import UploadImageButton from "../UploadImageButton";
+import { IMAGE_BACKGROUNDS } from "@assets/image-backgrounds";
+import ImageItemCard from "../ImageItemCard";
+import { Space } from "antd";
+import { makeid } from "@utils/string.util";
+import { fetchImageBuffer } from "@utils/canvas.util";
 
 type Props = {
   layer: CanvasLayerInfo<CanvasImageBackground>;
@@ -22,7 +25,7 @@ const BackgroundImageSetting = ({ layer, onImageUpload }: Props) => {
         id: Date.now() + Math.floor(Math.random() * 100000),
         data: arrayBuffer,
         url: `data:jpeg;base64,${base64}`,
-        extension: 'jpeg',
+        extension: "jpeg",
         name: `Background Image ${makeid(5)}`,
       },
     ]);
@@ -34,24 +37,26 @@ const BackgroundImageSetting = ({ layer, onImageUpload }: Props) => {
         <FileImageItemCard
           item={layer.background.value as FileImageItem}
           style={{
-            width: '100%',
+            width: "100%",
           }}
           onClick={() => {}}
         />
       )}
       <UploadImageButton
         singleFile
-        onImageUpload={uploadedImageItems => onImageUpload(layer.id, uploadedImageItems)}
+        onImageUpload={(uploadedImageItems) =>
+          onImageUpload(layer.id, uploadedImageItems)
+        }
       />
       <h4>Template</h4>
-      <Space style={{ flexWrap: 'wrap' }}>
-        {IMAGE_BACKGROUNDS.map(imageBackground => (
+      <Space style={{ flexWrap: "wrap" }}>
+        {IMAGE_BACKGROUNDS.map((imageBackground) => (
           <React.Fragment>
             <ImageItemCard
-              onClick={data => handleTemplateImageClicked(data)}
+              onClick={(data) => handleTemplateImageClicked(data)}
               style={{
                 width: 100,
-                height: '100%',
+                height: "100%",
                 margin: 0,
               }}
               data={imageBackground}

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Button, Divider, Drawer, Empty, Input, Skeleton } from 'antd';
-import { SearchOutlined, UploadOutlined } from '@ant-design/icons';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { MIDDLE_STYLE } from '@constants/responsive';
-import { GLOBAL_THEME_COLOR } from '@constants/theme';
-import LoadableContainer from './LoadableContainer';
-import SocialIcon from './SocialIcon';
-import { useDrawerStore } from '@stores/useDrawerStore';
-import { useCanvasStudioService } from '@core/hooks';
+import React, { useState } from "react";
+import { Button, Divider, Drawer, Empty, Input, Skeleton } from "antd";
+import { SearchOutlined, UploadOutlined } from "@ant-design/icons";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { MIDDLE_STYLE } from "@constants/responsive";
+import { GLOBAL_THEME_COLOR } from "@constants/theme";
+import LoadableContainer from "../LoadableContainer";
+import SocialIcon from "../SocialIcon";
+import { useDrawerStore } from "@stores/useDrawerStore";
+import { useCanvasStudioService } from "@core/hooks";
 
 type Props = {
   singleFile?: boolean;
@@ -16,7 +16,7 @@ type Props = {
 
 const BrowseUnsplashPhotoDrawer = ({ singleFile, onLoad }: Props) => {
   const canvasStudioService = useCanvasStudioService();
-  const [searchInput, setSearchInput] = useState<string>('');
+  const [searchInput, setSearchInput] = useState<string>("");
   const [pics, setPics] = useState<any[]>([]);
   const [selectedPics, setSelectedPics] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState<boolean>(false);
@@ -27,7 +27,7 @@ const BrowseUnsplashPhotoDrawer = ({ singleFile, onLoad }: Props) => {
   };
 
   const handleUpload = () => {
-    onLoad(pics.filter(pic => selectedPics[pic.id]));
+    onLoad(pics.filter((pic) => selectedPics[pic.id]));
   };
 
   const handleSearchPhotos = async () => {
@@ -44,7 +44,7 @@ const BrowseUnsplashPhotoDrawer = ({ singleFile, onLoad }: Props) => {
   return (
     <Drawer
       title={
-        <div style={{ ...MIDDLE_STYLE, justifyContent: 'space-between' }}>
+        <div style={{ ...MIDDLE_STYLE, justifyContent: "space-between" }}>
           <h3>Stock Photos</h3>
           <Button onClick={handleUpload}>
             <UploadOutlined />
@@ -52,26 +52,31 @@ const BrowseUnsplashPhotoDrawer = ({ singleFile, onLoad }: Props) => {
           </Button>
         </div>
       }
-      placement={'bottom'}
+      placement={"bottom"}
       closable={true}
       onClose={handleOnClose}
-      height={'90%'}
+      height={"90%"}
       getContainer={false}
-      open={drawerName === 'unsplashPhotoDrawer'}>
+      open={drawerName === "unsplashPhotoDrawer"}
+    >
       <Input
         prefix={<SearchOutlined />}
         suffix={
-          <Button disabled={!searchInput} onClick={handleSearchPhotos} type="primary">
+          <Button
+            disabled={!searchInput}
+            onClick={handleSearchPhotos}
+            type="primary"
+          >
             Search Photos
           </Button>
         }
         value={searchInput}
-        onChange={e => setSearchInput(e.target.value)}
+        onChange={(e) => setSearchInput(e.target.value)}
         placeholder="Search by keywords. i.e. Restaurants, Gym, Food..."
       />
       <div style={{ ...MIDDLE_STYLE, marginTop: 20 }}>
         <span>
-          Powered by <span style={{ fontWeight: 'bold' }}>Unsplash</span>{' '}
+          Powered by <span style={{ fontWeight: "bold" }}>Unsplash</span>{" "}
         </span>
         <SocialIcon platform="unsplash" width={15} style={{ marginLeft: 5 }} />
       </div>
@@ -86,9 +91,10 @@ const BrowseUnsplashPhotoDrawer = ({ singleFile, onLoad }: Props) => {
                 description={<span>No images found</span>}
               />
             </div>
-          }>
+          }
+        >
           <div className="card-list">
-            {pics.map(pic => (
+            {pics.map((pic) => (
               <div
                 onClick={() =>
                   setSelectedPics(
@@ -106,12 +112,15 @@ const BrowseUnsplashPhotoDrawer = ({ singleFile, onLoad }: Props) => {
                 key={pic.id}
                 style={{
                   borderRadius: 20,
-                  padding: selectedPics[pic.id] ? '5px' : '0px',
-                  cursor: 'pointer',
+                  padding: selectedPics[pic.id] ? "5px" : "0px",
+                  cursor: "pointer",
                   ...(selectedPics[pic.id]
-                    ? { border: `6px solid ${GLOBAL_THEME_COLOR.$highlight_color}` }
+                    ? {
+                        border: `6px solid ${GLOBAL_THEME_COLOR.$highlight_color}`,
+                      }
                     : {}),
-                }}>
+                }}
+              >
                 <LazyLoadImage
                   loading="lazy"
                   className="card--image"

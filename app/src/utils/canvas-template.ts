@@ -1,8 +1,8 @@
-import React from 'react';
-import { GLOBAL_THEME_COLOR, STRIPE_BOX_SHADOW } from '@constants/theme';
-import { DEFAULT_CANVAS_SIZE } from '@constants/size';
-import CanvasLayerBackgroundSetting from '@components/CanvasLayerBackgroundSetting';
-import CanvasLayerGeneralSetting from '@components/CanvasLayerGeneralSetting';
+import React from "react";
+import { GLOBAL_THEME_COLOR, STRIPE_BOX_SHADOW } from "@constants/theme";
+import { DEFAULT_CANVAS_SIZE } from "@constants/size";
+import CanvasLayerBackgroundSetting from "@components/canvas/CanvasLayerBackgroundSetting";
+import CanvasLayerGeneralSetting from "@components/canvas/CanvasLayerGeneralSetting";
 import {
   CanvasArrowAnnotationConfig,
   CanvasBackgroundVariant,
@@ -11,19 +11,19 @@ import {
   CanvasLayerType,
   CanvasLineChartConfig,
   CanvasPieChartConfig,
-} from '../core/models/canvas-type';
-import CanvasSquareAnnotationLayer from '@components/CanvasSquareAnnotationLayer';
-import CanvasLayerContainerSetting from '@components/CanvasLayerContainerSetting';
+} from "../core/models/canvas-type";
+import CanvasSquareAnnotationLayer from "@components/canvas/CanvasSquareAnnotationLayer";
+import CanvasLayerContainerSetting from "@components/canvas/CanvasLayerContainerSetting";
 import {
   getBarChartMockData,
   getLineChartMockData,
   getPieChartMockData,
-} from '@constants/chart-data';
-import { generateRandomRgbaStr } from './string.util';
+} from "@constants/chart-data";
+import { generateRandomRgbaStr } from "./string.util";
 
-export const CANVAS_BACKGROUND_LAYER_ID = 'canvas-background-layer';
-export const CANVAS_SETTING_SET_GENERAL = 'General';
-export const CANVAS_TRANSFORM_3D = '3D';
+export const CANVAS_BACKGROUND_LAYER_ID = "canvas-background-layer";
+export const CANVAS_SETTING_SET_GENERAL = "General";
+export const CANVAS_TRANSFORM_3D = "3D";
 
 export const DEFAULT_CANVAS_BACKGROUND_LAYER: CanvasLayerInfo = {
   layerComponent: CanvasSquareAnnotationLayer.name,
@@ -36,7 +36,7 @@ export const DEFAULT_CANVAS_BACKGROUND_LAYER: CanvasLayerInfo = {
     ],
   },
   id: CANVAS_BACKGROUND_LAYER_ID,
-  name: 'Background',
+  name: "Background",
   height: DEFAULT_CANVAS_SIZE[0],
   width: DEFAULT_CANVAS_SIZE[1],
   x: undefined,
@@ -58,19 +58,19 @@ export const DEFAULT_CANVAS_BACKGROUND_LAYER: CanvasLayerInfo = {
 
 export const BEAUTIFUL_LAYER_CARD = {
   borderRadius: 20,
-  overflow: 'hidden',
+  overflow: "hidden",
   boxShadow: STRIPE_BOX_SHADOW,
 };
 
 export const DEFAULT_LABEL_CONTAINER_STYLE: React.CSSProperties = {
-  background: 'white',
+  background: "white",
   border: `1px solid ${GLOBAL_THEME_COLOR.$border_color}`,
   boxShadow: STRIPE_BOX_SHADOW,
   borderRadius: 10,
   color: GLOBAL_THEME_COLOR.$dark_text_color,
-  fontSize: '0.8em',
-  lineHeight: '20px',
-  padding: '0 0.4em 0 1em',
+  fontSize: "0.8em",
+  lineHeight: "20px",
+  padding: "0 0.4em 0 1em",
   fontWeight: 200,
 };
 
@@ -113,19 +113,19 @@ export const DEFAULT_CANVAS_LINE_CHART_CONFIG: CanvasLineChartConfig = {
   },
   editLabelPosition: false,
   editSubjectPosition: false,
-  subjectType: 'circle',
-  connectorType: 'elbow',
+  subjectType: "circle",
+  connectorType: "elbow",
   annotationPosition: {
     x: 0,
     y: 0,
     dx: 0,
     dy: 0,
   },
-  annotationTitle: 'Title',
+  annotationTitle: "Title",
   annotationTitleStyle: {
     fontSize: 25,
   },
-  annotationSubtitle: 'Example of the line chart subtitle',
+  annotationSubtitle: "Example of the line chart subtitle",
   annotationSubtitleStyle: {
     fontSize: 20,
   },
@@ -134,12 +134,13 @@ export const DEFAULT_CANVAS_LINE_CHART_CONFIG: CanvasLineChartConfig = {
   ...getLineChartMockData(),
 };
 
-export const DEFAULT_CANVAS_ARROW_ANNOTATION_CONFIG: CanvasArrowAnnotationConfig = {
-  arrowType: 0,
-  svgProps: {
-    height: 50,
-    width: 50,
-    fill: 'black',
-    transform: 'rotate(30, 0, 0)',
-  },
-};
+export const DEFAULT_CANVAS_ARROW_ANNOTATION_CONFIG: CanvasArrowAnnotationConfig =
+  {
+    arrowType: 0,
+    svgProps: {
+      height: 50,
+      width: 50,
+      fill: "black",
+      transform: "rotate(30, 0, 0)",
+    },
+  };

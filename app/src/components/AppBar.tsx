@@ -24,9 +24,9 @@ const AppBar = (props: Props) => {
   return (
     <Layout.Header
       style={{
-        padding: "0px 40px",
+        padding: "0px 10px",
         display: "flex",
-        height: 80,
+        height: 60,
         justifyContent: "space-between",
         alignItems: "center",
         borderBottom: `1px solid ${GLOBAL_THEME_COLOR.$border_color}`,
@@ -35,7 +35,7 @@ const AppBar = (props: Props) => {
       <a href="https://lowlevlers.co" style={{ ...MIDDLE_STYLE }}>
         <img
           src="/substracer-logo.png"
-          style={{ height: 40, marginRight: 10 }}
+          style={{ height: 55 }}
           alt="UpChart Logo"
         />
       </a>

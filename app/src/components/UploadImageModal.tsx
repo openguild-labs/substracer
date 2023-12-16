@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { Button, Divider, Empty, Modal, Skeleton, Space } from 'antd';
-import LoadableContainer from '@components/LoadableContainer';
-import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
-import { Buffer } from 'buffer';
-import { MIDDLE_STYLE } from '@constants/responsive';
-import BrowseUnsplashPhotoDrawer from '@components/BrowseUnsplashPhotoDrawer';
-import { makeid } from '@utils/string.util';
-import axios from 'axios';
-import FileImageItemCard from './FileImageItemCard';
-import BrowseUnsplashPhotos from './BrowseUnsplashPhoto';
-import { useDrawerStore } from '@stores/useDrawerStore';
-import { FileImageItem } from '@core/models';
+import React, { useState } from "react";
+import { Button, Divider, Empty, Modal, Skeleton, Space } from "antd";
+import LoadableContainer from "@components/LoadableContainer";
+import { DeleteOutlined, UploadOutlined } from "@ant-design/icons";
+import { Buffer } from "buffer";
+import { MIDDLE_STYLE } from "@constants/responsive";
+import BrowseUnsplashPhotoDrawer from "@components/canvas/BrowseUnsplashPhotoDrawer";
+import { makeid } from "@utils/string.util";
+import axios from "axios";
+import FileImageItemCard from "./FileImageItemCard";
+import BrowseUnsplashPhotos from "./canvas/BrowseUnsplashPhoto";
+import { useDrawerStore } from "@stores/useDrawerStore";
+import { FileImageItem } from "@core/models";
 
 type Props = {
   open: boolean;
@@ -31,7 +31,9 @@ const UploadImageModal = ({
 }: Props) => {
   const { closeDrawer } = useDrawerStore();
   const [fileImageItems, setFileImageItems] = useState<FileImageItem[]>([]);
-  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({});
+  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>(
+    {}
+  );
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleImageItemClicked = (item: FileImageItem) => {
@@ -45,7 +47,7 @@ const UploadImageModal = ({
     if (singleFile) {
       setFileImageItems([imageItem]);
     } else {
-      setFileImageItems(urls => urls.concat([imageItem]));
+      setFileImageItems((urls) => urls.concat([imageItem]));
     }
   };
 
@@ -54,13 +56,15 @@ const UploadImageModal = ({
     for (let i = 0; i < pics.length; i++) {
       const pic = pics[i];
       const response = await axios.get<ArrayBuffer>(pic.urls.full, {
-        responseType: 'arraybuffer',
+        responseType: "arraybuffer",
       });
       const imageItem: FileImageItem = {
         id: Date.now() + Math.floor(Math.random() * 100000),
-        extension: 'jpeg',
+        extension: "jpeg",
         name: makeid(10),
-        url: `data:jpeg;base64,${Buffer.from(response.data).toString('base64')}`,
+        url: `data:jpeg;base64,${Buffer.from(response.data).toString(
+          "base64"
+        )}`,
         data: response.data,
       };
       handleSetFileImageItem(imageItem);
@@ -93,7 +97,9 @@ const UploadImageModal = ({
           id: Date.now() + Math.floor(Math.random() * 100000),
           extension: extension,
           name: filename,
-          url: `data:${extension};base64,${Buffer.from(data).toString('base64')}`,
+          url: `data:${extension};base64,${Buffer.from(data).toString(
+            "base64"
+          )}`,
           data: data,
         };
         handleSetFileImageItem(imageItem);
@@ -103,7 +109,9 @@ const UploadImageModal = ({
   };
 
   const handleClearSelected = () => {
-    setFileImageItems(items => (items = items.filter(item => !selectedItems[item.id])));
+    setFileImageItems(
+      (items) => (items = items.filter((item) => !selectedItems[item.id]))
+    );
   };
 
   const handleCloseModal = () => {
@@ -129,17 +137,19 @@ const UploadImageModal = ({
           <UploadOutlined /> {actionTitle}
         </div>
       }
-      width={'100%'}
-      style={{ maxWidth: 1000, overflow: 'hidden' }}>
-      <div style={{ minHeight: '500px' }}>
+      width={"100%"}
+      style={{ maxWidth: 1000, overflow: "hidden" }}
+    >
+      <div style={{ minHeight: "500px" }}>
         <Divider />
         <React.Fragment>
           <div
             style={{
               ...MIDDLE_STYLE,
-              justifyContent: 'space-between',
+              justifyContent: "space-between",
               marginBottom: 50,
-            }}>
+            }}
+          >
             <Space>
               <label className="upload-file-button">
                 <input
@@ -166,12 +176,13 @@ const UploadImageModal = ({
                     description={<span>No images uploaded</span>}
                   />
                 </div>
-              }>
+              }
+            >
               <React.Fragment>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                  {fileImageItems.map(fileImageItem => (
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                  {fileImageItems.map((fileImageItem) => (
                     <FileImageItemCard
-                      onClick={item => handleImageItemClicked(item)}
+                      onClick={(item) => handleImageItemClicked(item)}
                       isSelected={selectedItems[fileImageItem.id]}
                       item={fileImageItem}
                     />
@@ -180,7 +191,10 @@ const UploadImageModal = ({
               </React.Fragment>
             </LoadableContainer>
           </LoadableContainer>
-          <BrowseUnsplashPhotoDrawer singleFile={singleFile} onLoad={handleUploadUnsplashImage} />
+          <BrowseUnsplashPhotoDrawer
+            singleFile={singleFile}
+            onLoad={handleUploadUnsplashImage}
+          />
         </React.Fragment>
       </div>
     </Modal>

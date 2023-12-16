@@ -3,16 +3,19 @@ import {
   CanvasLayerId,
   CanvasLayerInfo,
   CanvasMeshGradientBackground,
-} from '@core/models/canvas-type';
-import { generateJSXMeshGradient } from '@utils/gradient.util';
-import { Button } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { TbSparkles } from 'react-icons/tb';
-import DescriptionItem from './DescriptionItem';
+} from "@core/models/canvas-type";
+import { generateJSXMeshGradient } from "@utils/gradient.util";
+import { Button } from "antd";
+import React, { useEffect, useState } from "react";
+import { TbSparkles } from "react-icons/tb";
+import DescriptionItem from "../DescriptionItem";
 
 type Props = {
   layer: CanvasLayerInfo<CanvasMeshGradientBackground>;
-  onValueChange: (layerId: CanvasLayerId, value: CanvasMeshGradientBackground) => void;
+  onValueChange: (
+    layerId: CanvasLayerId,
+    value: CanvasMeshGradientBackground
+  ) => void;
 };
 
 const BackgroundMeshGradientSetting = ({ layer, onValueChange }: Props) => {
@@ -29,13 +32,13 @@ const BackgroundMeshGradientSetting = ({ layer, onValueChange }: Props) => {
     <React.Fragment>
       <DescriptionItem
         title="Background Color"
-        textStyle={{ fontWeight: 'normal' }}
+        textStyle={{ fontWeight: "normal" }}
         content={
           <div
             style={{
               marginTop: 10,
-              width: '50px',
-              height: '50px',
+              width: "50px",
+              height: "50px",
               borderRadius: 10,
               ...background,
             }}
@@ -43,8 +46,9 @@ const BackgroundMeshGradientSetting = ({ layer, onValueChange }: Props) => {
         }
       />
       <Button
-        style={{ width: '100%', marginTop: 10 }}
-        onClick={() => setBackground(generateRandomColor())}>
+        style={{ width: "100%", marginTop: 10 }}
+        onClick={() => setBackground(generateRandomColor())}
+      >
         <TbSparkles />
         Generate
       </Button>

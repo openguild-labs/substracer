@@ -1,8 +1,8 @@
-import React from 'react';
-import ChartDataEditorModal from './ChartDataEditorModal';
-import DateTimePickerModal from './DateTimePickerModal';
-import IntegrationActionModal from './IntegrationActionModal';
-import ViewLayerTemplateModal from './ViewLayerTemplateModal';
+import React from "react";
+import ChartDataEditorModal from "./canvas/ChartDataEditorModal";
+import DateTimePickerModal from "./DateTimePickerModal";
+import IntegrationActionModal from "./IntegrationActionModal";
+import ViewLayerTemplateModal from "./canvas/ViewLayerTemplateModal";
 
 type Props = {};
 

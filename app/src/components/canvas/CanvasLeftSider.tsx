@@ -6,9 +6,9 @@ import { useCanvasStore } from "@stores/useCanvasStore";
 import { CANVAS_ACTIONS, CanvasAction } from "@constants/canvasActionList";
 import { iterateObject } from "@utils/canvas.util";
 
-import SiderImageAction from "./SiderImageAction";
-import SiderLayerSettingAction from "./SiderComponentSettingAction";
-import SiderAnnotationAciton from "./SiderAnnotationAction";
+import SiderImageAction from "../SiderImageAction";
+import SiderLayerSettingAction from "../SiderComponentSettingAction";
+import SiderAnnotationAciton from "../SiderAnnotationAction";
 import { ClearOutlined } from "@ant-design/icons";
 import CanvasLeftSiderActionButton from "./CanvasLeftSiderActionButton";
 // import SiderBrandAction from './SiderBrandAction';

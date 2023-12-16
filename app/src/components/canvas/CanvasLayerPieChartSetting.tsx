@@ -1,31 +1,36 @@
-import React from 'react';
-import { CanvasLayerSettingComponent, CanvasPieChartConfig } from '@core/models/canvas-type';
-import DescriptionItem from './DescriptionItem';
-import { Checkbox, InputNumber } from 'antd';
-import { useLayerConfig } from '@core/index';
+import React from "react";
+import {
+  CanvasLayerSettingComponent,
+  CanvasPieChartConfig,
+} from "@core/models/canvas-type";
+import DescriptionItem from "../DescriptionItem";
+import { Checkbox, InputNumber } from "antd";
+import { useLayerConfig } from "@core/index";
 
-const CanvasLayerPieChartSetting: CanvasLayerSettingComponent<any, CanvasPieChartConfig> = ({
-  layer,
-}) => {
-  const { config, handleUpdateConfig } = useLayerConfig<CanvasPieChartConfig>(layer);
+const CanvasLayerPieChartSetting: CanvasLayerSettingComponent<
+  any,
+  CanvasPieChartConfig
+> = ({ layer }) => {
+  const { config, handleUpdateConfig } =
+    useLayerConfig<CanvasPieChartConfig>(layer);
   return (
     <div>
       <h4>Pie Chart Setting</h4>
       <DescriptionItem
         textStyle={{
-          fontWeight: 'normal',
+          fontWeight: "normal",
         }}
         title="Label"
         content={
           <Checkbox
             checked={config.labelShown}
-            onChange={e => handleUpdateConfig('labelShown', e.target.checked)}
+            onChange={(e) => handleUpdateConfig("labelShown", e.target.checked)}
           />
         }
       />
       <DescriptionItem
         textStyle={{
-          fontWeight: 'normal',
+          fontWeight: "normal",
         }}
         title="Corner Radius"
         content={
@@ -33,25 +38,25 @@ const CanvasLayerPieChartSetting: CanvasLayerSettingComponent<any, CanvasPieChar
             min={2}
             max={200}
             value={config.cornerRadius}
-            onChange={value => handleUpdateConfig('cornerRadius', value)}
+            onChange={(value) => handleUpdateConfig("cornerRadius", value)}
           />
         }
       />
       <DescriptionItem
         textStyle={{
-          fontWeight: 'normal',
+          fontWeight: "normal",
         }}
         title="Donut Mode"
         content={
           <Checkbox
             checked={config.donutMode}
-            onChange={e => handleUpdateConfig('donutMode', e.target.checked)}
+            onChange={(e) => handleUpdateConfig("donutMode", e.target.checked)}
           />
         }
       />
       <DescriptionItem
         textStyle={{
-          fontWeight: 'normal',
+          fontWeight: "normal",
         }}
         title="Padding"
         content={
@@ -59,14 +64,14 @@ const CanvasLayerPieChartSetting: CanvasLayerSettingComponent<any, CanvasPieChar
             min={0}
             max={100}
             value={config.donutPadding}
-            onChange={value => handleUpdateConfig('donutPadding', value)}
+            onChange={(value) => handleUpdateConfig("donutPadding", value)}
           />
         }
       />
       {config.donutMode && (
         <DescriptionItem
           textStyle={{
-            fontWeight: 'normal',
+            fontWeight: "normal",
           }}
           title="Donut Thickness"
           content={
@@ -74,7 +79,7 @@ const CanvasLayerPieChartSetting: CanvasLayerSettingComponent<any, CanvasPieChar
               min={2}
               max={200}
               value={config.donutThickness}
-              onChange={value => handleUpdateConfig('donutThickness', value)}
+              onChange={(value) => handleUpdateConfig("donutThickness", value)}
             />
           }
         />

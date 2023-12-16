@@ -1,81 +1,87 @@
-import React from 'react';
-import DescriptionItem from './DescriptionItem';
-import SolidColorButton from './SolidColorButton';
+import React from "react";
+import DescriptionItem from "../DescriptionItem";
+import SolidColorButton from "./SolidColorButton";
 import {
   CanvasBarChartConfig,
   CanvasLayerSettingComponent,
   TextAlignmentValue,
   TextStyleConfig,
-} from '@core/models';
-import { useLayerConfig } from '@core/index';
-import { Checkbox, Divider, InputNumber } from 'antd';
-import { TwitterPicker } from 'react-color';
-import FontStyleSetting from './FontStyleSetting';
+} from "@core/models";
+import { useLayerConfig } from "@core/index";
+import { Checkbox, Divider, InputNumber } from "antd";
+import { TwitterPicker } from "react-color";
+import FontStyleSetting from "./FontStyleSetting";
 
-const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<any, CanvasBarChartConfig> = ({
-  layer,
-}) => {
-  const { config, handleUpdateConfig } = useLayerConfig<CanvasBarChartConfig>(layer);
+const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<
+  any,
+  CanvasBarChartConfig
+> = ({ layer }) => {
+  const { config, handleUpdateConfig } =
+    useLayerConfig<CanvasBarChartConfig>(layer);
   return (
     <div>
       <h4>Bar Chart Setting</h4>
       <DescriptionItem
         textStyle={{
-          fontWeight: 'normal',
+          fontWeight: "normal",
         }}
-        title={'Bar width'}
+        title={"Bar width"}
         content={
           <InputNumber
             value={config.barWidth}
-            onChange={value => handleUpdateConfig('barWidth', value)}
+            onChange={(value) => handleUpdateConfig("barWidth", value)}
           />
         }
       />
       <DescriptionItem
         textStyle={{
-          fontWeight: 'normal',
+          fontWeight: "normal",
         }}
-        title={'Bar Height'}
+        title={"Bar Height"}
         content={
           <InputNumber
             value={config.barHeight}
-            onChange={value => handleUpdateConfig('barHeight', value)}
+            onChange={(value) => handleUpdateConfig("barHeight", value)}
           />
         }
       />
       <DescriptionItem
         textStyle={{
-          fontWeight: 'normal',
+          fontWeight: "normal",
         }}
         title="Show Label"
         content={
           <Checkbox
             checked={config.labelShown}
-            onChange={e => handleUpdateConfig('labelShown', e.target.checked)}
+            onChange={(e) => handleUpdateConfig("labelShown", e.target.checked)}
           />
         }
       />
       <DescriptionItem
         textStyle={{
-          fontWeight: 'normal',
+          fontWeight: "normal",
         }}
         title="Show Bar Value"
         content={
           <Checkbox
             checked={config.barValueShown}
-            onChange={e => handleUpdateConfig('barValueShown', e.target.checked)}
+            onChange={(e) =>
+              handleUpdateConfig("barValueShown", e.target.checked)
+            }
           />
         }
       />
       <DescriptionItem
         textStyle={{
-          fontWeight: 'normal',
+          fontWeight: "normal",
         }}
         title="Apply one color for all bar"
         content={
           <Checkbox
             checked={config.oneColorMode}
-            onChange={e => handleUpdateConfig('oneColorMode', e.target.checked)}
+            onChange={(e) =>
+              handleUpdateConfig("oneColorMode", e.target.checked)
+            }
           />
         }
       />
@@ -83,13 +89,15 @@ const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<any, CanvasBarChar
         <React.Fragment>
           <DescriptionItem
             textStyle={{
-              fontWeight: 'normal',
+              fontWeight: "normal",
             }}
             title="Bar Color"
             content={
               <SolidColorButton
                 value={config.barColor}
-                onValueChanged={value => handleUpdateConfig('barColor', value)}
+                onValueChanged={(value) =>
+                  handleUpdateConfig("barColor", value)
+                }
               />
             }
           />
@@ -97,20 +105,20 @@ const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<any, CanvasBarChar
           <TwitterPicker
             triangle="hide"
             color={config.barColor}
-            onChange={e => handleUpdateConfig('barColor', e.hex)}
+            onChange={(e) => handleUpdateConfig("barColor", e.hex)}
           />
         </React.Fragment>
       )}
       <Divider />
       <h4>Label</h4>
       <FontStyleSetting
-        align={(config.labelStyle?.fontStyle.textAlign as any) || 'initial'}
+        align={(config.labelStyle?.fontStyle.textAlign as any) || "initial"}
         color={config.labelStyle?.fontStyle.color as string}
         fontSize={config.labelStyle?.fontStyle.fontSize as number}
         fontWeight={500}
         fontFamily={config.labelStyle?.fontStyle.fontFamily as string}
-        onAlignChange={value =>
-          handleUpdateConfig('labelStyle', {
+        onAlignChange={(value) =>
+          handleUpdateConfig("labelStyle", {
             ...config.labelStyle,
             fontStyle: {
               ...config.labelStyle?.fontStyle,
@@ -118,8 +126,8 @@ const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<any, CanvasBarChar
             },
           } as TextStyleConfig)
         }
-        onFontWeightChange={value =>
-          handleUpdateConfig('labelStyle', {
+        onFontWeightChange={(value) =>
+          handleUpdateConfig("labelStyle", {
             ...config.labelStyle,
             fontStyle: {
               ...config.labelStyle?.fontStyle,
@@ -127,8 +135,8 @@ const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<any, CanvasBarChar
             },
           } as TextStyleConfig)
         }
-        onFontFamilyChange={value =>
-          handleUpdateConfig('labelStyle', {
+        onFontFamilyChange={(value) =>
+          handleUpdateConfig("labelStyle", {
             ...config.labelStyle,
             fontStyle: {
               ...config.labelStyle?.fontStyle,
@@ -136,8 +144,8 @@ const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<any, CanvasBarChar
             },
           } as TextStyleConfig)
         }
-        onColorChange={value =>
-          handleUpdateConfig('labelStyle', {
+        onColorChange={(value) =>
+          handleUpdateConfig("labelStyle", {
             ...config.labelStyle,
             fontStyle: {
               ...config.labelStyle?.fontStyle,
@@ -145,8 +153,8 @@ const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<any, CanvasBarChar
             } as TextStyleConfig,
           })
         }
-        onFontSizeChange={value =>
-          handleUpdateConfig('labelStyle', {
+        onFontSizeChange={(value) =>
+          handleUpdateConfig("labelStyle", {
             ...config.labelStyle,
             fontStyle: {
               ...config.labelStyle?.fontStyle,
@@ -162,8 +170,8 @@ const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<any, CanvasBarChar
         fontWeight={500}
         fontFamily={config.barValueStyle?.fontStyle.fontFamily as string}
         fontSize={config.barValueStyle?.fontStyle.fontSize as number}
-        onAlignChange={value =>
-          handleUpdateConfig('barValueStyle', {
+        onAlignChange={(value) =>
+          handleUpdateConfig("barValueStyle", {
             ...config.barValueStyle,
             fontStyle: {
               ...config.barValueStyle?.fontStyle,
@@ -171,8 +179,8 @@ const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<any, CanvasBarChar
             },
           } as TextStyleConfig)
         }
-        onFontWeightChange={value =>
-          handleUpdateConfig('barValueStyle', {
+        onFontWeightChange={(value) =>
+          handleUpdateConfig("barValueStyle", {
             ...config.barValueStyle,
             fontStyle: {
               ...config.barValueStyle?.fontStyle,
@@ -180,8 +188,8 @@ const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<any, CanvasBarChar
             },
           } as TextStyleConfig)
         }
-        onFontFamilyChange={value =>
-          handleUpdateConfig('barValueStyle', {
+        onFontFamilyChange={(value) =>
+          handleUpdateConfig("barValueStyle", {
             ...config.barValueStyle,
             fontStyle: {
               ...config.barValueStyle?.fontStyle,
@@ -189,8 +197,8 @@ const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<any, CanvasBarChar
             },
           } as TextStyleConfig)
         }
-        onColorChange={value =>
-          handleUpdateConfig('barValueStyle', {
+        onColorChange={(value) =>
+          handleUpdateConfig("barValueStyle", {
             ...config.barValueStyle,
             fontStyle: {
               ...config.barValueStyle?.fontStyle,
@@ -198,8 +206,8 @@ const CanvasLayerBarChartSetting: CanvasLayerSettingComponent<any, CanvasBarChar
             } as TextStyleConfig,
           })
         }
-        onFontSizeChange={value =>
-          handleUpdateConfig('barValueStyle', {
+        onFontSizeChange={(value) =>
+          handleUpdateConfig("barValueStyle", {
             ...config.barValueStyle,
             fontStyle: {
               ...config.barValueStyle?.fontStyle,

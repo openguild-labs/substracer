@@ -1,5 +1,5 @@
 import React from "react";
-import DescriptionItem from "./DescriptionItem";
+import DescriptionItem from "../DescriptionItem";
 import {
   CanvasLayerInfo,
   CanvasSolidBackground,

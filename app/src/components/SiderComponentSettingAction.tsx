@@ -1,6 +1,6 @@
 import React from "react";
 import { useCanvasStore } from "@stores/useCanvasStore";
-import LayerListItem from "./LayerListItem";
+import LayerListItem from "./canvas/LayerListItem";
 import {
   DragDropContext,
   Draggable,

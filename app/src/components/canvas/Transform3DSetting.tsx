@@ -1,8 +1,8 @@
-import React from 'react';
-import { CanvasLayerSettingComponent } from '@core/models';
-import DescriptionItem from './DescriptionItem';
-import { Slider } from 'antd';
-import { useCanvasStore } from '@stores/useCanvasStore';
+import React from "react";
+import { CanvasLayerSettingComponent } from "@core/models";
+import DescriptionItem from "../DescriptionItem";
+import { Slider } from "antd";
+import { useCanvasStore } from "@stores/useCanvasStore";
 
 const Transfrom3DSetting: CanvasLayerSettingComponent = ({ layer }) => {
   const { updateLayer } = useCanvasStore();
@@ -16,8 +16,8 @@ const Transfrom3DSetting: CanvasLayerSettingComponent = ({ layer }) => {
             min={0}
             max={90}
             step={5}
-            style={{ width: '100%' }}
-            onChange={value =>
+            style={{ width: "100%" }}
+            onChange={(value) =>
               updateLayer(layer.id, {
                 ...layer,
                 transform3dStyles: {
@@ -36,8 +36,8 @@ const Transfrom3DSetting: CanvasLayerSettingComponent = ({ layer }) => {
           <Slider
             min={-45}
             max={45}
-            style={{ width: '100%' }}
-            onChange={value =>
+            style={{ width: "100%" }}
+            onChange={(value) =>
               updateLayer(layer.id, {
                 ...layer,
                 transform3dStyles: {
@@ -56,8 +56,8 @@ const Transfrom3DSetting: CanvasLayerSettingComponent = ({ layer }) => {
           <Slider
             min={-45}
             max={45}
-            style={{ width: '100%' }}
-            onChange={value =>
+            style={{ width: "100%" }}
+            onChange={(value) =>
               updateLayer(layer.id, {
                 ...layer,
                 transform3dStyles: {
@@ -76,8 +76,8 @@ const Transfrom3DSetting: CanvasLayerSettingComponent = ({ layer }) => {
           <Slider
             min={-45}
             max={45}
-            style={{ width: '100%' }}
-            onChange={value =>
+            style={{ width: "100%" }}
+            onChange={(value) =>
               updateLayer(layer.id, {
                 ...layer,
                 transform3dStyles: {

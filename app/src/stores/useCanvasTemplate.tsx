@@ -1,20 +1,20 @@
-import CanvasImageLayer from "@components/CanvasImageLayer";
-import CanvasLayerBackgroundSetting from "@components/CanvasLayerBackgroundSetting";
-import CanvasLayerContainerSetting from "@components/CanvasLayerContainerSetting";
-import CanvasLayerFontStyleSetting from "@components/CanvasLayerFontStyleSetting";
-import CanvasLayerGeneralChartSetting from "@components/CanvasLayerGeneralChartSetting";
-import CanvasLayerGeneralSetting from "@components/CanvasLayerGeneralSetting";
-import CanvasLayerLineChartSetting from "@components/CanvasLayerLineChartSetting";
-import CanvasLayerFontFamilySetting from "@components/CanvasLayerTextSetting";
-import CanvasLineChartLayer from "@components/CanvasLineChartLayer";
-import CanvasTextAnnotationLayer from "@components/CanvasTextAnnotationLayer";
-import CanvasSquareAnnotationLayer from "@components/CanvasSquareAnnotationLayer";
-import CanvasPieChartLayer from "@components/CanvasPieChartLayer";
-import CanvasBarChartLayer from "@components/CanvasBarChartLayer";
-import CanvasLayerPieChartSetting from "@components/CanvasLayerPieChartSetting";
-import CanvasLayerOrderSetting from "@components/CanvasLayerOrderSetting";
-import CanvasLayerBarChartSetting from "@components/CanvasLayerBarChartSetting";
-import CanvasArrowAnnotationLayer from "@components/CanvasArrowAnnotationLayer";
+import CanvasImageLayer from "@components/canvas/CanvasImageLayer";
+import CanvasLayerBackgroundSetting from "@components/canvas/CanvasLayerBackgroundSetting";
+import CanvasLayerContainerSetting from "@components/canvas/CanvasLayerContainerSetting";
+import CanvasLayerFontStyleSetting from "@components/canvas/CanvasLayerFontStyleSetting";
+import CanvasLayerGeneralChartSetting from "@components/canvas/CanvasLayerGeneralChartSetting";
+import CanvasLayerGeneralSetting from "@components/canvas/CanvasLayerGeneralSetting";
+import CanvasLayerLineChartSetting from "@components/canvas/CanvasLayerLineChartSetting";
+import CanvasLayerFontFamilySetting from "@components/canvas/CanvasLayerTextSetting";
+import CanvasLineChartLayer from "@components/canvas/CanvasLineChartLayer";
+import CanvasTextAnnotationLayer from "@components/canvas/CanvasTextAnnotationLayer";
+import CanvasSquareAnnotationLayer from "@components/canvas/CanvasSquareAnnotationLayer";
+import CanvasPieChartLayer from "@components/canvas/CanvasPieChartLayer";
+import CanvasBarChartLayer from "@components/canvas/CanvasBarChartLayer";
+import CanvasLayerPieChartSetting from "@components/canvas/CanvasLayerPieChartSetting";
+import CanvasLayerOrderSetting from "@components/canvas/CanvasLayerOrderSetting";
+import CanvasLayerBarChartSetting from "@components/canvas/CanvasLayerBarChartSetting";
+import CanvasArrowAnnotationLayer from "@components/canvas/CanvasArrowAnnotationLayer";
 import { GLOBAL_THEME_COLOR } from "@constants/theme";
 import {
   BarChartData,
@@ -42,13 +42,13 @@ import {
   DEFAULT_CANVAS_PIE_CHART_CONFIG,
 } from "@utils/canvas-template";
 import { useCanvasStore } from "./useCanvasStore";
-import CanvasLayerArrowSetting from "@components/CanvasLayerArrowSetting";
-import CanvasLayerSvgSetting from "@components/CanvasLayerSvgSetting";
-import CanvasChartAxisSetting from "@components/CanvasChartAxisSetting";
-import Transform3DSetting from "@components/Transform3DSetting";
-import CanvasLayerEmojiSetting from "@components/CanvasLayerEmojiSetting";
-import CanvasEmojiAnnotationLayer from "@components/CanvasEmojiAnnotationLayer";
-import CanvasPHProductLayer from "@components/CanvasPHProductLayer";
+import CanvasLayerArrowSetting from "@components/canvas/CanvasLayerArrowSetting";
+import CanvasLayerSvgSetting from "@components/canvas/CanvasLayerSvgSetting";
+import CanvasChartAxisSetting from "@components/canvas/CanvasChartAxisSetting";
+import Transform3DSetting from "@components/canvas/Transform3DSetting";
+import CanvasLayerEmojiSetting from "@components/canvas/CanvasLayerEmojiSetting";
+import CanvasEmojiAnnotationLayer from "@components/canvas/CanvasEmojiAnnotationLayer";
+import CanvasPHProductLayer from "@components/canvas/CanvasPHProductLayer";
 
 export const useCanvasTemplate = () => {
   const { addNewLayer } = useCanvasStore();
