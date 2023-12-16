@@ -55,3 +55,4 @@ This feature allows a visualization of the request transmitting in the network t
 
 - ui: add a simple canvas edtior ui and add node modal (`@chungquantin`)
 - research `netsim` and `zombienet` , we can fork the source code of one of these projects to simulate the simple network. `netsim` is written in Rust and it simulates the basic network with router, switch, udp, ws so it is likable while `zombienet` is more like a wrapper which use `exca` to spawn child process and run node as subprocess.
+<img width="1512" alt="Screenshot 2023-12-17 at 00 37 27" src="https://github.com/lowlevelers/substrate-simulator/assets/56880684/26152fce-cf75-4e34-b550-2eb66bcc588e">
