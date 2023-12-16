@@ -1,8 +1,8 @@
-import { UploadOutlined } from '@ant-design/icons';
-import { Button, ButtonProps } from 'antd';
-import React, { useState } from 'react';
-import UploadImageModal from './UploadImageModal';
-import { FileImageItem } from '@core/models';
+import { UploadOutlined } from "@ant-design/icons";
+import { Button, ButtonProps } from "antd";
+import React, { useState } from "react";
+import UploadImageModal from "./modal/UploadImageModal";
+import { FileImageItem } from "@core/models";
 
 type Props = ButtonProps & {
   singleFile?: boolean;
@@ -18,9 +18,10 @@ const UploadImageButton = ({ singleFile, onImageUpload, ...props }: Props) => {
     <div>
       <Button
         type="primary"
-        style={{ width: '100%', marginTop: 10 }}
+        style={{ width: "100%", marginTop: 10 }}
         onClick={handleUploadImage}
-        {...props}>
+        {...props}
+      >
         <UploadOutlined />
         Upload image
       </Button>
@@ -29,7 +30,7 @@ const UploadImageButton = ({ singleFile, onImageUpload, ...props }: Props) => {
         singleFile={singleFile}
         onUpload={onImageUpload}
         open={openUploadModal}
-        setOpen={open => setOpenUploadModal(open)}
+        setOpen={(open) => setOpenUploadModal(open)}
       />
     </div>
   );

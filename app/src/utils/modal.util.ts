@@ -1,5 +1,5 @@
 export type ModalType =
-  | 'chartDataEditorModal'
-  | 'dateTimePickerModal'
-  | 'integrationActionModal'
-  | 'viewTemplateModal';
+  | "chartDataEditorModal"
+  | "dateTimePickerModal"
+  | "addNewNodeModal"
+  | "viewTemplateModal";

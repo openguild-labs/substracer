@@ -5,8 +5,8 @@ import { Col, Divider, Modal, Row } from "antd";
 import Spreadsheet from "../Spreadsheet";
 import LoadableContainer from "../LoadableContainer";
 import { useCanvasStore } from "@stores/useCanvasStore";
-import CanvasEditorZoomView from "./CanvasEditorZoomView";
-import { layerRegistryHashMap } from "./layer-canvas-registry";
+import CanvasEditorZoomView from "../canvas/CanvasEditorZoomView";
+import { layerRegistryHashMap } from "../canvas/layer-canvas-registry";
 
 type Props = {};
 

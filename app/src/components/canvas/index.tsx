@@ -2,9 +2,9 @@
 export { default as FileImageItemCard } from "../FileImageItemCard";
 export { default as BrowseUnsplashPhotoDrawer } from "./BrowseUnsplashPhotoDrawer";
 /** Modal Components */
-export { default as ViewLayerTemplateModal } from "./ViewLayerTemplateModal";
+export { default as ViewLayerTemplateModal } from "../modal/ViewLayerTemplateModal";
 /** Data Components */
-export { default as ChartDataEditorModal } from "./ChartDataEditorModal";
+export { default as ChartDataEditorModal } from "../modal/ChartDataEditorModal";
 /** Setting Components */
 export { default as FontStyleSetting } from "./FontStyleSetting";
 export { default as BackgroundSolidSetting } from "./BackgroundSolidSetting";
@@ -25,7 +25,7 @@ export { default as BoxShadowSelectorButton } from "./BoxShadowSelectorButton";
 export { default as LayerListItem } from "./LayerListItem";
 export { default as CanvasLayer } from "./CanvasLayer";
 export { default as CanvasEditor } from "./CanvasEditor";
-export { default as CanvasLeftSider } from "./CanvasLeftSider";
+export { default as CanvasLeftSider } from "../sider/CanvasLeftSider";
 export { default as CanvasStudioLayout } from "./CanvasStudioLayout";
 export { default as CanvasLayerStatusBar } from "./CanvasLayerStatusBar";
 export { default as CanvasEditoZoomView } from "./CanvasEditorZoomView";

@@ -1,6 +1,6 @@
 import React from "react";
 import { useCanvasStore } from "@stores/useCanvasStore";
-import LayerListItem from "./canvas/LayerListItem";
+import LayerListItem from "../canvas/LayerListItem";
 import {
   DragDropContext,
   Draggable,
@@ -9,11 +9,11 @@ import {
 } from "react-beautiful-dnd";
 import { useMount } from "@core/index";
 import { reorder } from "@utils/draggable.util";
-import LoadableContainer from "./LoadableContainer";
-import { Button, Empty } from "antd";
+import LoadableContainer from "../LoadableContainer";
+import { Empty } from "antd";
 import { MIDDLE_STYLE } from "@constants/responsive";
 import { TbTerminal } from "react-icons/tb";
-import { PlusOutlined } from "@ant-design/icons";
+import { AddNewNodeButton } from "@components/substrate";
 
 type Props = {};
 
@@ -34,9 +34,7 @@ const SiderLayerSettingAction = (props: Props) => {
   return (
     <div style={{ textAlign: "left" }}>
       <h4>Components</h4>
-      <Button style={{ width: "100%" }} type="primary">
-        <PlusOutlined /> Add new node
-      </Button>
+      <AddNewNodeButton />
       <LoadableContainer
         isLoading={layerIdsInOrder.length === 0}
         loadComponent={

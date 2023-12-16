@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { ModalType } from '@utils/modal.util';
+import { create } from "zustand";
+import { ModalType } from "@utils/modal.util";
 
 type ModalPayload = {
   status: boolean;
@@ -11,8 +11,11 @@ export interface ModalStoreState {
   closeModal: (modalName: ModalType) => void;
 }
 
-export const useModalStore = create<ModalStoreState>()(set => ({
+export const useModalStore = create<ModalStoreState>()((set) => ({
   openedModals: {
+    addNewNodeModal: {
+      status: false,
+    },
     viewTemplateModal: {
       status: false,
     },
@@ -22,12 +25,9 @@ export const useModalStore = create<ModalStoreState>()(set => ({
     dateTimePickerModal: {
       status: false,
     },
-    integrationActionModal: {
-      status: false,
-    },
   },
   openModal: (modalName: ModalType, extraParams?: Record<string, any>) =>
-    set(state => ({
+    set((state) => ({
       ...state,
       openedModals: {
         ...state.openedModals,
@@ -38,7 +38,7 @@ export const useModalStore = create<ModalStoreState>()(set => ({
       },
     })),
   closeModal: (modalName: ModalType) =>
-    set(state => ({
+    set((state) => ({
       ...state,
       openedModals: {
         ...state.openedModals,

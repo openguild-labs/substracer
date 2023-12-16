@@ -15,7 +15,7 @@ $light-theme-colors: (
   "text_color_contrast": white,
   "dark_text_color_contrast": rgb(189, 189, 189),
   "secondary_text_color": rgb(255, 255, 255),
-  "color_border": #3f3f3f,
+  "color_border": #4d5566,
   "error_color": #e5534b,
   "error_text_color": #e5534b,
   "success_color": #2bb049,
@@ -1925,6 +1925,9 @@ body {
   color: #8c8c8c;
 }
 .ant-input {
+  font-size: smaller !important;
+  padding: 0px !important;
+  height: 30px !important;
   border-radius: 6px;
 }
 .ant-input {
@@ -3633,4 +3636,20 @@ img {
 
 button {
   border-radius: 3px !important;
+}
+
+.ant-modal-close-icon {
+  color: white;
+}
+
+.ant-modal-content {
+  background-color: map-get($theme-colors, background_color) !important;
+}
+
+.ant-modal-header {
+  background-color: map-get($theme-colors, background_color) !important;
+}
+
+.ant-input::placeholder {
+  color: map-get($theme-colors, dark_text_color);
 }

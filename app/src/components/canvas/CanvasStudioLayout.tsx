@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Row } from "antd";
 import CanvasEditor from "./CanvasEditor";
 import CanvasLayerSetting from "./CanvasLayerSetting";
-import CanvasLeftSider from "./CanvasLeftSider";
+import CanvasLeftSider from "../sider/CanvasLeftSider";
 import { GLOBAL_THEME_COLOR } from "@constants/theme";
 import { useCanvasStore } from "@stores/useCanvasStore";
 import { countExistentialObject } from "@utils/canvas.util";

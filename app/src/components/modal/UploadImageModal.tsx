@@ -7,8 +7,8 @@ import { MIDDLE_STYLE } from "@constants/responsive";
 import BrowseUnsplashPhotoDrawer from "@components/canvas/BrowseUnsplashPhotoDrawer";
 import { makeid } from "@utils/string.util";
 import axios from "axios";
-import FileImageItemCard from "./FileImageItemCard";
-import BrowseUnsplashPhotos from "./canvas/BrowseUnsplashPhoto";
+import FileImageItemCard from "../FileImageItemCard";
+import BrowseUnsplashPhotos from "../canvas/BrowseUnsplashPhoto";
 import { useDrawerStore } from "@stores/useDrawerStore";
 import { FileImageItem } from "@core/models";
 

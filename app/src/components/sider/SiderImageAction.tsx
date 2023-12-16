@@ -1,5 +1,5 @@
 import React from "react";
-import UploadImageButton from "./UploadImageButton";
+import UploadImageButton from "../UploadImageButton";
 import { FileImageItem } from "@core/models";
 import { useCanvasStore } from "@stores/useCanvasStore";
 import { CanvasLayerType } from "@core/models/canvas-type";
@@ -7,7 +7,7 @@ import { CANVAS_BACKGROUND_LAYER_ID } from "@utils/canvas-template";
 import { fetchImageBuffer } from "@utils/canvas.util";
 import { useCanvasTemplate } from "@stores/useCanvasTemplate";
 import { SOCIAL_LOGOS } from "@assets/social-icons";
-import ImageItemCard from "./ImageItemCard";
+import ImageItemCard from "../ImageItemCard";
 import { makeid } from "@utils/string.util";
 import { Button, Divider, Popover, Space, Tooltip } from "antd";
 import { useCanvasUtility } from "@stores/useCanvasUtility";
