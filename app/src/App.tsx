@@ -1,24 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Helmet } from "react-helmet";
+import { HashRouter as Router } from "react-router-dom";
+import "./App.css";
+import AppProvider from "./AppProvider";
+import { BRAND_LOGO_CONSTRAST } from "./constants";
+import AppRouter from "./AppRouter";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title lang="en">substracer</title>
+        <html lang="en" />
+        <link rel="canonical" href="https://substracer/" />
+        <meta
+          name="description"
+          content="All-in-one tab & link management platform"
+        />
+        <meta name="keywords" content="productivity, link, software" />
+        <link rel="apple-touch-icon" href={`/${BRAND_LOGO_CONSTRAST}`} />
+        <link
+          rel="apple-touch-icon"
+          sizes="72x72"
+          href={`/${BRAND_LOGO_CONSTRAST}`}
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://app.substracer/" />
+        <meta property="og:title" content="UpChart" />
+        <meta
+          property="og:description"
+          content="All-in-one tab & link management platform"
+        />
+      </Helmet>
+      <AppProvider>
+        <Router>
+          <AppRouter />
+        </Router>
+      </AppProvider>
     </div>
   );
 }

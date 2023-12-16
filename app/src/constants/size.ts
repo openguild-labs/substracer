@@ -1,0 +1,1 @@
+export const DEFAULT_CANVAS_SIZE = [1080, 1080];
