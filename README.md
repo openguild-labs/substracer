@@ -4,7 +4,6 @@
   <img style="border-radius: 10px !important; overflow: hidden;" src="https://github.com/lowlevelers/substracer/assets/56880684/472601f5-358f-4fd8-88b5-103f5c5f6345"/>
 </p>
 
-
 ## Description
 
 Simulate the substrate network in an interactive graphical interface.
@@ -60,4 +59,10 @@ This feature allows a visualization of the request transmitting in the network t
 
 - ui: add a simple canvas edtior ui and add node modal (`@chungquantin`)
 - research `netsim` and `zombienet` , we can fork the source code of one of these projects to simulate the simple network. `netsim` is written in Rust and it simulates the basic network with router, switch, udp, ws so it is likable while `zombienet` is more like a wrapper which use `exca` to spawn child process and run node as subprocess.
-<img width="1512" alt="Screenshot 2023-12-17 at 00 37 27" src="https://github.com/lowlevelers/substrate-simulator/assets/56880684/26152fce-cf75-4e34-b550-2eb66bcc588e">
+  <img width="1512" alt="Screenshot 2023-12-17 at 00 37 27" src="https://github.com/lowlevelers/substrate-simulator/assets/56880684/26152fce-cf75-4e34-b550-2eb66bcc588e">
+
+### 18-12-2023
+
+After learning about `zombienet` and `netsim` approach, if we apply the design of `zombienet` for Substracer, we need to refractor the runtime to add custom logger overriding the existing runtime logger so it can stream the data of node back to Substracer backend. However, this still use a local testing environment not a simulated environment. Hence, it's hard if we want to spawn >10 daemons just for testing. But the benefit is we don't have to worry much about the underlying networking protocol built on top of `libp2p`.
+
+With `netsim`, it gives us the ability to simulate the simple network but there is not way to integrate it with `libp2p`. Hence, we need to mock `libp2p` code and build a simpler version to support the simulation.
