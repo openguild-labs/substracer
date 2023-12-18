@@ -1,7 +1,5 @@
 use crate::utils::errors::ServerApiError;
-use crate::{
-    models::node_mdl::NodeModel, types::EdgeSelectable, utils::query_utils::ToEdgedbQuery,
-};
+use crate::{models::node::NodeModel, types::EdgeSelectable, utils::query_utils::ToEdgedbQuery};
 use axum::{extract::State, response::Result as AxumResult, Json};
 use serde::Deserialize;
 

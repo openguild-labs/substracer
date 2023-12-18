@@ -1,5 +1,5 @@
 use crate::{
-    models::pair_mdl::{pair_dispatcher, SimulatedPairModel},
+    models::keypair::{pair_dispatcher, SimulatedPairModel},
     utils::{key_utils::crypto_scheme_from_str, query_utils::ToEdgedbQuery},
 };
 use axum::{extract::State, http::StatusCode, Json};

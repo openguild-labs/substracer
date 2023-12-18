@@ -8,7 +8,7 @@ use serde_with::skip_serializing_none;
 
 use crate::types::EdgeSelectable;
 
-use super::pair_mdl::SimulatedPairModel;
+use super::keypair::SimulatedPairModel;
 
 #[serde_with::apply(
     EDatetime => #[serde(serialize_with = "serialize_edge_datetime")],
@@ -24,6 +24,9 @@ pub struct NodeModel {
     pub keystore: Vec<SimulatedPairModel>,
     pub created_at: EDatetime,
     pub updated_at: Option<EDatetime>,
+
+    // address collection of boot nodes
+    pub boot_nodes: Vec<String>,
 }
 
 impl Default for NodeModel {
@@ -37,6 +40,7 @@ impl Default for NodeModel {
             keystore: Vec::default(),
             created_at,
             updated_at: None,
+            boot_nodes: Vec::default(),
         }
     }
 }

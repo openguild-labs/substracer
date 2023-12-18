@@ -1,5 +1,4 @@
 mod chain_spec;
-mod config;
 mod controllers;
 mod models;
 mod serializer;
@@ -16,7 +15,7 @@ use axum::{
 };
 use chain_spec::local_testnet_config;
 use clap::Parser;
-use config::ServerConfiguration;
+use models::network_spec::NetworkSpecModel;
 
 use crate::state::AppState;
 
@@ -37,7 +36,7 @@ fn load_chain_spec() -> Result<Box<dyn sc_service::ChainSpec>, String> {
 // simulate Substrate network
 fn simulate_substrate_net() -> Result<(), String> {
     let _chain_spec = self::load_chain_spec()?;
-    ServerConfiguration::new(_chain_spec);
+    NetworkSpecModel::new(_chain_spec);
     Ok(())
 }
 

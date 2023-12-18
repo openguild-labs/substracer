@@ -12,7 +12,6 @@ pub struct QueryableChainSpecModel {
     pub id: String,
     pub name: String,
     pub chain_type: String,
-    pub boot_nodes: Vec<String>,
     pub protocol_id: Option<String>,
 }
 
@@ -22,7 +21,6 @@ pub struct ChainSpecModel {
     pub id: String,
     pub name: String,
     pub chainType: String,
-    pub bootNodes: Vec<String>,
     pub protocolId: Option<String>,
     pub genesis: GenesisSourceModel,
 }

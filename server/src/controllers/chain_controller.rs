@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use crate::{
     chain_spec::{development_config, local_testnet_config, ChainSpec},
-    models::chain_spec_mdl::ChainSpecModel,
+    models::chain_spec::ChainSpecModel,
 };
 use axum::{http::StatusCode, Json};
 use serde_json as json;
