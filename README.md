@@ -1,4 +1,9 @@
-# Substrate Simulator
+# Substracer - Interactive Substrate Simulator
+
+<p align="center">
+  <img style="border-radius: 10px !important; overflow: hidden;" src="https://github.com/lowlevelers/substracer/assets/56880684/472601f5-358f-4fd8-88b5-103f5c5f6345"/>
+</p>
+
 
 ## Description
 
