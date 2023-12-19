@@ -15,3 +15,9 @@ pub enum ServerApiError {
     #[error("Other error: {0}")]
     Other(String),
 }
+
+#[derive(Debug, Error)]
+pub enum NetworkCoreError {
+    #[error("{0} not found")]
+    ObjectNotFound(String),
+}

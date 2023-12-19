@@ -1,4 +1,5 @@
 mod chain_spec;
+pub mod constant;
 mod controllers;
 mod models;
 mod serializer;
@@ -15,7 +16,7 @@ use axum::{
 };
 use chain_spec::local_testnet_config;
 use clap::Parser;
-use models::network_spec::NetworkSpecModel;
+use models::network::SimulatorNetwork;
 
 use crate::state::AppState;
 
@@ -33,11 +34,10 @@ fn load_chain_spec() -> Result<Box<dyn sc_service::ChainSpec>, String> {
     Ok(Box::new(loaded_spec))
 }
 
-// simulate Substrate network
-fn simulate_substrate_net() -> Result<(), String> {
+fn init_simulated_net() -> Result<SimulatorNetwork, String> {
     let _chain_spec = self::load_chain_spec()?;
-    NetworkSpecModel::new(_chain_spec);
-    Ok(())
+    let network = SimulatorNetwork::new(_chain_spec);
+    Ok(network)
 }
 
 /// start the web server with command
@@ -97,8 +97,34 @@ async fn start_web_server() -> Result<(), Error> {
 
 #[tokio::main]
 async fn main() {
-    // simulate the substrate net
-    simulate_substrate_net().unwrap();
     // start web server for client api
     start_web_server().await.unwrap();
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{
+        constant::DEFAULT_LOCALHOST_ADDRESS,
+        models::{network::NetworkEntityScope, node::Node},
+    };
+
+    use super::*;
+
+    #[test]
+    fn test_simulated_network_init() {
+        let mut network = init_simulated_net().unwrap();
+
+        let node = Node::new(
+            Some("alice".to_string()),
+            DEFAULT_LOCALHOST_ADDRESS.to_string(),
+        );
+
+        assert_eq!(network.relay.len(), 0);
+
+        network
+            .add_new_node(node.clone(), NetworkEntityScope::RELAY)
+            .unwrap();
+
+        assert!(network.relay.iter().any(|n| n.id == node.id))
+    }
 }

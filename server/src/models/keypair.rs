@@ -15,8 +15,8 @@ use crate::{
 };
 use sp_runtime::traits::IdentifyAccount;
 
-#[derive(Default, Deserialize, Serialize, Debug, PartialEq, Eq, Queryable, FieldNames)]
-pub struct SimulatedPairModel {
+#[derive(Default, Clone, Deserialize, Serialize, Debug, PartialEq, Eq, Queryable, FieldNames)]
+pub struct SimulatedKeypair {
     pub id: uuid::Uuid,
     pub key_password: Option<String>,
     pub secret_phrase: Option<String>,
@@ -30,7 +30,7 @@ pub struct SimulatedPairModel {
     pub ss58_address: String,
 }
 
-impl EdgeSelectable for SimulatedPairModel {
+impl EdgeSelectable for SimulatedKeypair {
     fn fields_as_shape() -> String {
         let fields = Self::FIELDS.join(", ");
         format!("{{ {fields} }}")
@@ -44,7 +44,7 @@ pub(crate) mod pair_dispatcher {
         uri: &str,
         password: Option<SecretString>,
         network_override: Option<Ss58AddressFormat>,
-    ) -> Result<SimulatedPairModel>
+    ) -> Result<SimulatedKeypair>
     where
         Pair: sp_core::Pair,
         Pair::Public: Into<MultiSigner>,
@@ -56,7 +56,7 @@ pub(crate) mod pair_dispatcher {
         if let Ok((pair, seed)) = Pair::from_phrase(uri, password.as_deref()) {
             let public_key = pair.public();
             let network_override = unwrap_or_default_ss58_version(network_override);
-            return Ok(SimulatedPairModel {
+            return Ok(SimulatedKeypair {
                 id: uuid::Uuid::default(),
                 key_password: password,
                 public_key_uri: None,
@@ -76,7 +76,7 @@ pub(crate) mod pair_dispatcher {
         } else if let Ok((pair, seed)) = Pair::from_string_with_seed(uri, password.as_deref()) {
             let public_key = pair.public();
             let network_override = unwrap_or_default_ss58_version(network_override);
-            return Ok(SimulatedPairModel {
+            return Ok(SimulatedKeypair {
                 id: uuid::Uuid::default(),
                 key_password: password,
                 public_key_uri: None,
@@ -99,7 +99,7 @@ pub(crate) mod pair_dispatcher {
             });
         } else if let Ok((public_key, network)) = Pair::Public::from_string_with_version(uri) {
             let network_override = network_override.unwrap_or(network);
-            return Ok(SimulatedPairModel {
+            return Ok(SimulatedKeypair {
                 id: uuid::Uuid::default(),
                 key_password: password,
                 secret_phrase: None,
@@ -121,7 +121,7 @@ pub(crate) mod pair_dispatcher {
     pub fn get_pair_from_public<Pair>(
         public_str: &str,
         network_override: Option<Ss58AddressFormat>,
-    ) -> Result<SimulatedPairModel, Error>
+    ) -> Result<SimulatedKeypair, Error>
     where
         Pair: sp_core::Pair,
         Pair::Public: Into<MultiSigner>,
@@ -134,7 +134,7 @@ pub(crate) mod pair_dispatcher {
 
         let network_override = unwrap_or_default_ss58_version(network_override);
 
-        return Ok(SimulatedPairModel {
+        return Ok(SimulatedKeypair {
             id: uuid::Uuid::default(),
             key_password: None,
             secret_phrase: None,
@@ -153,7 +153,7 @@ pub(crate) mod pair_dispatcher {
         public_str: &str,
         scheme: CryptoScheme,
         network_overrides: Option<Ss58AddressFormat>,
-    ) -> Result<SimulatedPairModel, Error> {
+    ) -> Result<SimulatedKeypair, Error> {
         with_crypto_scheme!(scheme, get_pair_from_public(public_str, network_overrides))
     }
 
@@ -162,7 +162,7 @@ pub(crate) mod pair_dispatcher {
         scheme: CryptoScheme,
         network: Option<Ss58AddressFormat>,
         password: Option<SecretString>,
-    ) -> Result<SimulatedPairModel, Error> {
+    ) -> Result<SimulatedKeypair, Error> {
         let words = match words {
             Some(words) => MnemonicType::for_word_count(words).map_err(|_| {
                 Error::msg("Invalid number of words given for phrase: must be 12/15/18/21/24")

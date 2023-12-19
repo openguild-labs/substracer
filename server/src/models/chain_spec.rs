@@ -8,7 +8,7 @@ pub struct GenesisSourceModel {
 }
 
 #[derive(Queryable)]
-pub struct QueryableChainSpecModel {
+pub struct QueryableChainSpec {
     pub id: String,
     pub name: String,
     pub chain_type: String,
@@ -17,7 +17,7 @@ pub struct QueryableChainSpecModel {
 
 #[derive(Deserialize, Serialize)]
 #[allow(non_snake_case)]
-pub struct ChainSpecModel {
+pub struct ChainSpec {
     pub id: String,
     pub name: String,
     pub chainType: String,

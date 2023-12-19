@@ -35,8 +35,8 @@ pub fn authority_keys_from_seed(s: &str) -> (AuraId, GrandpaId) {
 /// Configure initial storage state for FRAME modules.
 fn testnet_genesis(
     wasm_binary: &[u8],
-    initial_authorities: Vec<(AuraId, GrandpaId)>,
-    root_key: AccountId,
+    _initial_authorities: Vec<(AuraId, GrandpaId)>,
+    _root_key: AccountId,
     endowed_accounts: Vec<AccountId>,
 ) -> RuntimeGenesisConfig {
     RuntimeGenesisConfig {

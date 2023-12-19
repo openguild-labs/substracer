@@ -1,5 +1,5 @@
 use crate::{
-    models::keypair::{pair_dispatcher, SimulatedPairModel},
+    models::keypair::{pair_dispatcher, SimulatedKeypair},
     utils::{key_utils::crypto_scheme_from_str, query_utils::ToEdgedbQuery},
 };
 use axum::{extract::State, http::StatusCode, Json};
@@ -18,7 +18,7 @@ pub struct GenerateNewKeyPair {
 // add_new_node: Add new node to the simulated network
 pub async fn generate_new_key_pair(
     Json(payload): Json<GenerateNewKeyPair>,
-) -> Result<Json<SimulatedPairModel>, StatusCode> {
+) -> Result<Json<SimulatedKeypair>, StatusCode> {
     let get_network = || {
         if let Some(_network) = payload.network {
             match parse_ss58_address_format(&_network) {
@@ -51,7 +51,7 @@ pub async fn generate_new_key_pair(
 
 #[derive(Default, Deserialize)]
 pub struct SaveNewKeypair {
-    keypair: SimulatedPairModel,
+    keypair: SimulatedKeypair,
 }
 
 impl ToEdgedbQuery for SaveNewKeypair {
@@ -77,10 +77,10 @@ impl ToEdgedbQuery for SaveNewKeypair {
 pub async fn save_new_keypair(
     State(edgedb_client): State<edgedb_tokio::Client>,
     Json(payload): Json<SaveNewKeypair>,
-) -> Result<Json<SimulatedPairModel>, StatusCode> {
+) -> Result<Json<SimulatedKeypair>, StatusCode> {
     let query = payload.to_query();
     let keypair = payload.keypair;
-    let pair_result: SimulatedPairModel = edgedb_client
+    let pair_result: SimulatedKeypair = edgedb_client
         .query_required_single(
             query.as_str(),
             &(
@@ -110,7 +110,7 @@ pub struct ReadPairFromPublic {
 
 pub async fn read_pair_from_public(
     Json(payload): Json<ReadPairFromPublic>,
-) -> Result<Json<SimulatedPairModel>, StatusCode> {
+) -> Result<Json<SimulatedKeypair>, StatusCode> {
     let get_network = || {
         if let Some(_network) = payload.network_overrides {
             match parse_ss58_address_format(&_network) {

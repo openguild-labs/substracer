@@ -1,5 +1,5 @@
 use crate::utils::errors::ServerApiError;
-use crate::{models::node::NodeModel, types::EdgeSelectable, utils::query_utils::ToEdgedbQuery};
+use crate::{models::node::Node, types::EdgeSelectable, utils::query_utils::ToEdgedbQuery};
 use axum::{extract::State, response::Result as AxumResult, Json};
 use serde::Deserialize;
 
@@ -22,9 +22,9 @@ impl ToEdgedbQuery for AddNewNode {
 pub async fn add_new_node(
     State(edgedb_client): State<edgedb_tokio::Client>,
     Json(payload): Json<AddNewNode>,
-) -> AxumResult<Json<NodeModel>> {
+) -> AxumResult<Json<Node>> {
     let query = payload.to_query();
-    let node_result: Option<NodeModel> = edgedb_client
+    let node_result: Option<Node> = edgedb_client
         .query_single(
             query.as_str(),
             &(
@@ -58,9 +58,9 @@ impl ToEdgedbQuery for AddNodeKeyStore {
 pub async fn add_node_keystore(
     State(edgedb_client): State<edgedb_tokio::Client>,
     Json(payload): Json<AddNodeKeyStore>,
-) -> AxumResult<Json<NodeModel>> {
+) -> AxumResult<Json<Node>> {
     let query = &payload.to_query();
-    let node_result: Option<NodeModel> = edgedb_client
+    let node_result: Option<Node> = edgedb_client
         .query_single(query, &(payload.node_id, payload.pair_pubkey))
         .await
         .map_err(ServerApiError::EdgeDBQueryError)
@@ -78,7 +78,7 @@ pub struct GetAllNodes {}
 
 impl ToEdgedbQuery for GetAllNodes {
     fn to_query(&self) -> String {
-        let fields = NodeModel::fields_as_shape();
+        let fields = Node::fields_as_shape();
         println!("Fields: {:?}", fields);
         return format!("SELECT Node {fields};");
     }
@@ -86,7 +86,7 @@ impl ToEdgedbQuery for GetAllNodes {
 
 pub async fn get_all_nodes(
     State(edgedb_client): State<edgedb_tokio::Client>,
-) -> AxumResult<Json<Vec<NodeModel>>> {
+) -> AxumResult<Json<Vec<Node>>> {
     let query = &GetAllNodes::default().to_query();
 
     let result = edgedb_client
