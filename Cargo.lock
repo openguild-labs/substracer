@@ -8230,6 +8230,7 @@ dependencies = [
  "sc-cli",
  "sc-consensus-aura",
  "sc-consensus-grandpa",
+ "sc-network",
  "sc-service",
  "serde",
  "serde_json",
