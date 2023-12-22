@@ -66,3 +66,10 @@ This feature allows a visualization of the request transmitting in the network t
 After learning about `zombienet` and `netsim` approach, if we apply the design of `zombienet` for Substracer, we need to refractor the runtime to add custom logger overriding the existing runtime logger so it can stream the data of node back to Substracer backend. However, this still use a local testing environment not a simulated environment. Hence, it's hard if we want to spawn >10 daemons just for testing. But the benefit is we don't have to worry much about the underlying networking protocol built on top of `libp2p`.
 
 With `netsim`, it gives us the ability to simulate the simple network but there is not way to integrate it with `libp2p`. Hence, we need to mock `libp2p` code and build a simpler version to support the simulation.
+
+### 23-12-2023
+
+- Add `sc_network` crate to the project so we can reuse modules
+- rewrite the type of node id to support the original `PeerId` from `sc_network` crate
+- Add new type `NetworkPort` to support the `SocketV4Addr`
+  Next thing is to have an entity manager that manage the existing nodes and network config, when the state changes (add new node, update network state) => entity is changed. New node added to the network must declare the `ip_address` and `ws_port`. Then, single node instance will be started and start discovering other nodes to construct the P2P network. Can reference from the way node discoveries work in Bit Torrent: https://www.youtube.com/watch?v=jf_ddGnum_4
