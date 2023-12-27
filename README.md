@@ -18,8 +18,6 @@ One of the biggest obstacles to diving deeper into the Polkadot blockchain is th
 
 Hence, we feel like the community needs a more creative solution to the stated problem. With experience in traditional networking software, the `Cisco Packet Tracker` is a tool hugely inspires the birth of the `Substrate Simulator`.
 
-![Cisco Packet Tracker](https://www.e2matrix.com/blog/wp-content/uploads/2018/10/packet-tracer-network.jpg)
-
 ## Development Milestone
 
 ### 🔴 Version 0.0.1
